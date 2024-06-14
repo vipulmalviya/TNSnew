@@ -1,0 +1,418 @@
+.singlecard {
+    position: relative;
+    max-height: 450px;
+    width: 245px !important;
+    padding: .5rem;
+    background: transparent;
+    color: var(--text-color);
+    border: none;
+}
+
+.singlecard>.cardbg {
+    position: relative;
+    border-radius: 10px !important;
+    height: 348px !important;
+    width: 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    overflow: hidden;
+}
+
+.movieDetails {
+    max-height: fit-content !important;
+    width: 100%;
+    justify-content: space-between !important;
+    padding: 1rem 0;
+    color: var(--text-color);
+}
+
+.movieDetails span:first-child {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 70%;
+}
+
+.movieDetails h4 {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: var(--p2-Paragraph);
+    width: 100%;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+    font-weight: 800;
+    overflow: hidden;
+}
+
+.movieDetails p {
+    font-size: var(--p4-Paragraph);
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    color: #D9D9D9;
+    margin-bottom: 0 !important;
+}
+
+.movieDetails span {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movieDetails span img {
+    width: fit-content !important;
+}
+
+.movieDetails .number {
+    color: var(--light-gray-color);
+    font-size: var(--p2-Paragraph);
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: 800;
+    height: auto;
+}
+
+.cardsBtn {
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: cubic-bezier(0.445, 0.05, 0.55, 0.95) .3s;
+}
+
+.cardsBtn svg {
+    color: var(--black-color);
+    font-size: 1rem;
+    stroke-width: 1.3px;
+}
+
+.singlecard:hover .cardbg::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #00000066;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) .3s;
+}
+
+.singlecard:hover .cardsBtn {
+    bottom: 0%;
+}
+
+.movieDetails .mainbtn {
+    width: 100% !important;
+    display: flex;
+    align-self: flex-end;
+}
+
+
+
+/* Experience Card  */
+
+
+.ExperienceCardDiv {
+    position: relative;
+    height: 150px;
+    width: 105px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.ExperienceCardDiv img {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.ExperienceCardDiv .cardbg {
+    cursor: pointer;
+
+}
+
+.ExperienceCardDiv:hover .cardbg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #00000066;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) .3s;
+}
+
+
+.effect::after {
+    content: url("../../../public/images/tick.svg");
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    border-radius: 5px;
+    background-color: #00000066;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* watchlist card */
+
+.modal {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.435);
+}
+
+.modal_warrper {
+    position: absolute;
+    min-height: 290px;
+    max-width: 680px;
+    border-radius: 20px;
+    padding: 50px;
+    border: 1px solid rgba(184, 184, 184, 1);
+    background: rgba(36, 36, 37, 1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 20px;
+}
+
+.cardHeader h2 {
+    font-size: var(--h3-Heading);
+    font-weight: 700;
+}
+
+.cardHeader p {
+    margin-bottom: 0;
+    font-size: var(--p3-Paragraph);
+    font-weight: 400;
+    color: var(--text-color) !important;
+}
+
+.watchlistAvatar img {
+    border-radius: 50%;
+}
+
+.dots {
+    height: 100%;
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.modal-left {
+    height: 100%;
+    width: fit-content;
+    gap: 20px;
+}
+
+.modal-left .mainbtnSec a {
+    color: var(--decorate-color) !important;
+
+}
+
+.modal-left h3 {
+    font-size: var(--p1-Paragraph);
+    font-weight: 700;
+    line-height: 24.42px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    margin-bottom: 0
+}
+
+.modal-input {
+    width: 400px;
+    height: 45px;
+    padding: 11px 30px 11px 30px;
+    gap: 10px;
+    border-radius: 90px;
+    border: 1px solid rgba(184, 184, 184, 0.5);
+    background: rgba(36, 36, 37, 1);
+    color: var(--text-light-color);
+}
+
+.modal-input::placeholder {
+    color: rgba(184, 184, 184, 1);
+}
+
+.modal-right {
+    width: 80%;
+    height: 100%;
+    gap: 20px;
+}
+
+.modal-right h1 {
+    font-size: var(--h3-Heading);
+    margin-bottom: 0;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 39.07px;
+    letter-spacing: 0.01em;
+    text-align: left;
+
+}
+
+/* wathlist card */
+
+.Card-wrapper {
+    position: relative;
+    /* width: 0%; */
+    min-height: 285px;
+    padding: 41px 40px 41px 40px;
+    gap: 10px;
+    border-radius: 20px;
+    background: rgba(40, 40, 41, 1);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0);
+}
+
+.Card-wrapper:hover {
+    border: 1px solid white;
+}
+
+.wathlistOptions {
+    top: 40px;
+    left: -10px;
+    background: rgba(40, 40, 41, 1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 160px;
+    min-height: 99px;
+    gap: 3px;
+    border-radius: 10px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.wathlistOptions>ul {
+    width: 100%;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+
+.wathlistOptions>ul>li {
+    width: 100%;
+    color: rgba(179, 179, 179, 1);
+    font-size: var(--p3-Paragraph) !important;
+    font-weight: 400;
+    line-height: 16.7px;
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 12px 10%;
+    gap: 10px;
+    border-radius: 10px;
+}
+
+.wathlistOptions>ul>li:hover {
+    background: rgba(54, 54, 57, 1);
+}
+
+.wathlistOptions>ul>li svg {
+    font-size: 1.1rem;
+}
+
+
+
+@media screen and (max-width: 1860px) and (min-width: 1280px) {
+    .singlecard {
+        width: 220px !important;
+        height: 340px !important;
+    }
+    .singlecard>.cardbg {
+        height: 90% !important;
+        width: 100% !important;
+    }
+    
+
+}
+
+@media screen and (max-width: 428px) {
+
+    .cardsBtn{
+        display: none;
+    }
+
+    .logospan{
+        display: none !important;
+    }
+    .moviespan{
+        width: 100% !important;
+    }
+    .singlecard {
+        height: 310px !important;
+        width: 171px !important;
+        padding: 0 .5rem !important;
+    }
+    .singlecard>.cardbg {
+        border-radius: 10px !important;
+        height: 256px !important;
+        width: 100% !important;
+    }
+
+    /* .singlecard>img {
+        height: 300px !important;
+    } */
+
+    .singlecard .movieDetails{
+        min-height: 100% !important;
+    }
+
+    .singlecard .movieDetails span h4 {
+        font-size: var(--p2-Paragraph);
+    }
+
+    .singlecard .movieDetails span img {
+        width: 60% !important;
+        height: 23px;
+        margin-top: 0 !important;
+    }
+
+    .singlecard .movieDetails .mainbtn {
+        font-size: var(--p3-Paragraph);
+    }
+
+    .logospan {
+        gap: 0rem !important;
+    }
+
+    .singlecard .movieDetails .number {
+        font-size: var(--p3-Paragraph);
+        font-weight: 600;
+    }
+
+    .singlecard .movieDetails p {
+        font-size: var(--p3-Paragraph);
+        color: #D9D9D9;
+    }
+
+    .modal_warrper {
+        min-width: 300px;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .modal-left {
+        width: 100%;
+    }
+
+    .modal-right {
+        width: 100%;
+    }
+
+    .modal-input {
+        width: 100%;
+    }
+
+    .wathlistOptions {
+        top: 40px;
+        right: -10px;
+        background: rgba(40, 40, 41, 1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        min-width: 220px;
+        min-height: 99px;
+        gap: 3px;
+        border-radius: 10px;
+        z-index: 1;
+        overflow: hidden;
+    }
+}

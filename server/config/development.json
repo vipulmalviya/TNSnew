@@ -1,0 +1,7 @@
+{
+  "BASE_URL": "http://localhost:3000",
+  "CLIENT_URL": "http://localhost:5173",
+  "CLIENT_ID": "1066337591221-skvlqhf394ggqm294cs15nrl7dd5cru7.apps.googleusercontent.com",
+  "CLIENT_SECRET": "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",
+  "PORT": 3000
+}

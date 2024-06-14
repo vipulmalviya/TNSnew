@@ -1,0 +1,33 @@
+.MobileMenu {
+    position: fixed;
+    bottom: 0 !important;
+    height: 65px;
+    width: 100%;
+    padding: 12px 0px 12px 0px;
+    background: rgba(40, 40, 41, 1);
+    z-index: 10;
+}
+
+.MobileMenu_ul {
+    gap: 25px;
+    padding: 0;
+}
+
+.MobileMenu_link {
+    gap: 6px;
+}
+
+.MobileMenu_link p {
+    gap: 5px;
+    color: var(--text-color);
+    font-size: 11px;
+    margin: 0;
+}
+
+
+@media screen and (min-width:428px){
+    .MobileMenu{
+        display: none;
+    }
+
+}
