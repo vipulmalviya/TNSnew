@@ -165,7 +165,7 @@
 
 .modal_warrper {
     position: absolute;
-    min-height: 290px;
+    height: 290px;
     max-width: 680px;
     border-radius: 20px;
     padding: 50px;
@@ -190,6 +190,7 @@
 }
 
 .watchlistAvatar img {
+    border: .5px solid rgba(255, 255, 255, 0.105);
     border-radius: 50%;
 }
 
@@ -250,6 +251,13 @@
     text-align: left;
 
 }
+.chooseAvtarInput{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
 
 /* wathlist card */
 

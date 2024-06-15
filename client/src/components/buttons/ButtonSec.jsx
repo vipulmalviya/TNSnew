@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const ButtonSec = ({ children , linkprop ,onclick }) => {
     return (
-        <button onClick={onclick} className='mainbtnSec justify-content-center align-items-center d-flex'>
+        <button onClick={onclick} className='position-relative mainbtnSec justify-content-center align-items-center d-flex'>
             <Link  className='d-flex align-items-center justify-content-center gap-2' to={linkprop}
             >
                 {children}

@@ -692,7 +692,7 @@ section {
 
 .cardContaienr {
   width: 100%;
-  min-height: 70vh;
+  min-height: 30vh;
   gap: 16px;
   grid-template-columns: repeat(2, 1fr);
 }

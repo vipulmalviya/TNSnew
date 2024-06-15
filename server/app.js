@@ -6,16 +6,16 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const usersRouter = require("./routes/usersRouter");
 const movieRouter = require("./routes/movieRouter");
+const watchlistRouter = require("./routes/watchlistRouter");
 const cors = require('cors');
 const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
-const userModal = require("./models/userModal");
 const mongoose = require('mongoose');
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -33,9 +33,10 @@ mongoose.connect(process.env.MONGO_URL)
   });
 
 app.use(express.json());
-const _dirname= path.dirname("")
-const buildpath = path.join(_dirname,"../client/dist")
-app.use(express.static(buildpath));
+// const _dirname= path.dirname("")
+// const buildpath = path.join(_dirname,"../client/dist")
+// app.use(express.static(buildpath));
+
 app.use(cors({
   origin: ['http://localhost:5173', 'https://thenextstream.in'],
   credentials: true,   
@@ -103,6 +104,7 @@ app.get("/login/success", async (req, res) => {
 
 app.use("/", usersRouter);
 app.use('/', movieRouter);
+app.use('/', watchlistRouter);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

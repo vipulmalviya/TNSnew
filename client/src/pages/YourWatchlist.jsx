@@ -109,6 +109,7 @@ const responsive = {
   }
 };
 const YourWatchlist = () => {
+
   const [items, setItems] = useState([
     { number: 1, title: 'Movie 1', genres: 'Action', year: 2021, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
     { number: 2, title: 'Movie 2', genres: 'Action', year: 2022, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
@@ -119,6 +120,7 @@ const YourWatchlist = () => {
     { number: 7, title: 'Movie 7', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
     { number: 8, title: 'Movie 8', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
   ]);
+
 
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData('text/plain', index);
@@ -145,7 +147,6 @@ const YourWatchlist = () => {
 
   const [ShowOption, setShowOption] = useState(false)
   const [ModalShow, setModalShow] = useState(false)
-  const [watchlists, setWatchlists] = useState(false);
   const [isCardsShow, setIsCardsShow] = useState(true);
   const [Manage, setManage] = useState(false);
 
@@ -160,39 +161,43 @@ const YourWatchlist = () => {
   function mangefunc() {
     setManage(!Manage)
   }
-  
-    function manage() {
+
+  function manage() {
     setIsCardsShow(!isCardsShow)
   }
 
+
+
+
+
   return (
     <fregment >
-       {Manage && <>
-       <section className='watchlistInfoSection d-flex align-items-start justify-content-center '>
-        <div className="container d-flex align-items-center justify-content-start">
-          <div className='d-flex align-items-center justify-content-between w-100'>
-            <div className="watchlistsInfo d-flex align-items-center justify-content-start">
-              <div className="watchlistAvatar mx-3">
-                <img height={"100%"} width={"100%"} src="https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1716545127~exp=1716545727~hmac=b06f7f7f6ababecdd569f3849519e0f8971d75936cab68ca367eca074bbea299" alt="" />
-                <button className='AvatarBtn position-absolute d-flex flex-column align-items-center justify-content-center'>
-                  <LuPen />
-                  Choose Avatar
-                </button>
-              </div>
-              <div className='pagehadding'>
-                <p className='mb-0'>Watchlist</p>
-                <h2 onClick={modalshow} style={{ cursor: "pointer", }}>Crime - Thriller Movies</h2>
-                {ModalShow && <Modal prop={ModalShow} />}
+      {Manage && <>
+        <section className='watchlistInfoSection d-flex align-items-start justify-content-center '>
+          <div className="container d-flex align-items-center justify-content-start">
+            <div className='d-flex align-items-center justify-content-between w-100'>
+              <div className="watchlistsInfo d-flex align-items-center justify-content-start">
+                <div className="watchlistAvatar mx-3">
+                  <img height={"100%"} width={"100%"} src="https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1716545127~exp=1716545727~hmac=b06f7f7f6ababecdd569f3849519e0f8971d75936cab68ca367eca074bbea299" alt="" />
+                  <button className='AvatarBtn position-absolute d-flex flex-column align-items-center justify-content-center'>
+                    <LuPen />
+                    Choose Avatar
+                  </button>
+                </div>
+                <div className='pagehadding'>
+                  <p className='mb-0'>Watchlist</p>
+                  <h2 onClick={modalshow} style={{ cursor: "pointer", }}>Crime - Thriller Movies</h2>
+                  {ModalShow && <Modal prop={ModalShow} />}
 
-                <p className=' d-flex align-items-center justify-content-start gap-2'><span>Rahul Malviya</span> . <span>8 Movies</span> . <span>2 TV Series</span></p>
+                  <p className=' d-flex align-items-center justify-content-start gap-2'><span>Rahul Malviya</span> . <span>8 Movies</span> . <span>2 TV Series</span></p>
+                </div>
               </div>
+              <button className="position-relative d-flex align-self-start"><IoMdMore onClick={showoptin} style={{ color: "#FFFF", fontSize: "1.5rem", }} />
+                {ShowOption && <WathlistOptionCard icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
+              </button>
             </div>
-            <button className="position-relative d-flex align-self-start"><IoMdMore onClick={showoptin} style={{ color: "#FFFF", fontSize: "1.5rem", }} />
-              {ShowOption && <WathlistOptionCard icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
-            </button>
           </div>
-        </div>
-      </section>
+        </section>
         <section className='listItemsSection'>
           <div className='listHead container d-flex align-items-center justify-content-start my-3'>
             <p className='div2 mb-0 d-flex align-items-center justify-content-start gap-3'>

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../buttons/Button'
 import "./Card.css"
 import WathlistOptionCard from './WathlistOptionCard'
 import { IoMdMore } from 'react-icons/io'
 import { FiMoreHorizontal } from 'react-icons/fi'
+import axios from 'axios'
 
 
 const WatchlistCard = ({ openList }) => {
@@ -41,6 +42,7 @@ const WatchlistCard = ({ openList }) => {
         }
     ]
 
+    const API = import.meta.env.VITE_APP_URI_API;
 
     const [ShowOption, setShowOption] = useState(false)
     const wrapperRef = useRef(null);
@@ -57,25 +59,60 @@ const WatchlistCard = ({ openList }) => {
         };
     }, [wrapperRef]);
 
+
+    const [watchlists, setWatchlists] = useState([]);
+
+    const fetchWatchlist = async () => {
+        try {
+            const url = `${API}/watchlist-get`;
+            const response = await axios.get(url);
+            setWatchlists(response.data);
+        } catch (error) {
+            console.error('Error fetching watchlist data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchWatchlist();
+    }, []);
+
+    const navigate = useNavigate()
+    const handleWatchlist = () => {
+        if (watchlists.length >= 0) {
+            navigate('/yourWatchlist');
+        } else {
+            navigate('/watchlistPage');
+        }
+    }
+    useEffect(() => {
+        handleWatchlist()
+    })
+
+
+    const colorArray = ["#282829", "#444D0D", "#294D0D", "#4D2C0D"];
+    const getRandomColor = () => colorArray[Math.floor(Math.random() * colorArray.length)];
+
+
+
     return (
         <>
-            {cardsArray.map((elem, index) => {
-                return <div ref={wrapperRef} key={index} className='Card-wrapper d-flex flex-column align-items-start justify-content-center gap-3' style={{ backgroundColor: elem.bgcolor, }}>
+            {watchlists.map((elem, index) =>
+                <div ref={wrapperRef} key={index} className='Card-wrapper d-flex flex-column align-items-start justify-content-center gap-3' style={{ backgroundColor: getRandomColor, }}>
                     <div className="watchlistAvatar">
-                        <img loading='lazy' width={"54px"} height={"54px"} src={elem.avatarurl} alt="" />
+                        <img loading='lazy' height={"60px"} width={"60px"} src={elem.watchlistAvatar} alt="Watchlist Avatar" />
                     </div>
                     <div className="cardHeader">
-                        <h2>{elem.watchlistTitle}</h2>
-                        <p>{elem.whoCreateWathlist}</p>
+                        <h2>{elem.watchlistName}</h2>
+                        <p>admin</p>
                     </div>
                     <div className='d-flex align-items-center justify-content-center gap-3'>
                         <Button onclick={openList}>Manage</Button>
                         <button className="position-relative"><FiMoreHorizontal onClick={() => setShowOption(index === ShowOption ? -1 : index)} style={{ color: "#FFFF", }} />
-                            {ShowOption === index && <WathlistOptionCard icon1={"images/pen.svg"} icon2={"images/deletegray.svg"}  prop1={"Rename"} prop2={"Delete List"} />}
+                            {ShowOption === index && <WathlistOptionCard icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
                         </button>
                     </div>
                 </div>
-            })}
+            )}
         </>
     )
 }

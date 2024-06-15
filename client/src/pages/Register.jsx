@@ -18,7 +18,6 @@ const Register = ({ click, prop, open }) => {
 
     const API = import.meta.env.VITE_APP_URI_API;
 
-
     console.log(API);
 
     const navigate = useNavigate();
