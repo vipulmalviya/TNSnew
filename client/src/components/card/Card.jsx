@@ -2,33 +2,43 @@ import React, { useState } from 'react'
 import "./Card.css"
 import Button from '../buttons/Button'
 import { Navigate, useNavigate } from 'react-router-dom'
+import WatchlistModel from './WatchlistModel'
 
 
 
 const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode }) => {
     const [ChangeBtn, setChangeBtn] = useState(false)
-    function btnchange() {
-        setChangeBtn(!ChangeBtn)
+    const [SelectWatchlist, setSelectWatchlist] = useState()
+ 
+    const selectWatchlistFunc = (params) => {
+        console.log(params.target.dataset);
+        setSelectWatchlist(true);
+        setChangeBtn(true);
     }
+
+
+
     const fullDate = year;
     const dateObject = new Date(fullDate);
     const fullyear = dateObject.getFullYear();
-    
-    const navigate =useNavigate()
-    
+
+    const navigate = useNavigate()
+
     return (
 
         <>
-            <div onClick={() => navigate(`/${mediaId}`)} className="singlecard" key={index}>
-                <div className='cardbg d-flex'
+            {SelectWatchlist && <WatchlistModel />}
+            <div className="singlecard" key={index}>
+                {/* <div onClick={() => navigate(`/${mediaId}`)} className='cardbg d-flex' */}
+                <div  className='cardbg d-flex'
                     style={{
                         background: `url(${Poster})`
                     }}>
-                    <img style={{margin:".5rem .5rem", zIndex:1,}} loading='lazy' height={"23px"} width={"23px"} src="images/done.svg" alt="doneicone" />
+                    <img style={{ margin: ".5rem .5rem", zIndex: 1, }} loading='lazy' height={"23px"} width={"23px"} src="images/done.svg" alt="doneicone" />
                     <div className='cardsBtn'>{
-                        <Button onclick={btnchange} value={value} colorProp={ChangeBtn} onClickprop={btnchange}>
+                        <button className='mainbtn' onClick={selectWatchlistFunc} data-id={mediaId} value={value} colorProp={ChangeBtn}>
                             {ChangeBtn ? <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/fillbookmark.svg" alt="icone" />} Remove</> : <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/darkbookmark.svg" alt="icone" />} Add to Watchlist</>}
-                        </Button>
+                        </button>
                     }
                     </div>
                 </div>

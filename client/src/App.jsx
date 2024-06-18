@@ -39,7 +39,7 @@ function App() {
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/watchlistPage" element={<WatchlistPage />} />
         <Route exact path="/yourWatchlist" element={<YourWatchlist />} />
-        <Route path="/:id" element={<SingleMoviePage />} />
+        <Route exact path="/:id" element={<SingleMoviePage />} />
         <Route path="/search" element={<SearchResult />} />
         <Route path="/curatedPage" element={<CuratedPage />} />
         <Route path="/categoryPage" element={<CategoryPage />} />

@@ -97,7 +97,7 @@ const MoodPage = () => {
                             <p className='mb-0' style={{ marginTop: "10px", }}>Choose up to 10 Moods which you like to get suggestions from</p>
                         </div>
                         <div className='d-flex align-items-center justify-content-start gap-3' style={{ marginTop: "30px", }}>
-                            <Button2 propdata1={handleError1} propdata2={handleError2}  linkprop={"/expreriencePage"}>Continue</Button2>
+                            <Button2 propdata1={handleError1} propdata2={handleError2}  linkprop={"/experiencePage"}>Continue</Button2>
                             <Link className='backbtn' rel="stylesheet" to="/"> Back </Link>
                         </div>
                     </div>

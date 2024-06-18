@@ -221,6 +221,84 @@
     background: var(--primary);
 }
 
+.skeletonsection {
+    position: relative;
+    max-height: 80vh;
+    width: 100vw;
+}
+
+.skeletonsectionDiv {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.skeletonSlide {
+    animation-duration: 2.2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+    background: linear-gradient(to right , rgba(255, 255, 255, 0.110) 4% ,rgba(255, 255, 255, 0.121) 5%, rgba(255, 255, 255, 0.121) 5%);
+    background-size: 1200px auto;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.145) 0px 4px 12px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1200px 0;
+    }
+
+    100% {
+        background-position: 1200px 0;
+    }
+}
+
+.skeletonDiv1 {
+    position: relative;
+    height: 522px;
+    width: 20%;
+}
+
+.skeletonDiv2 {
+    position: relative;
+    height: 600px;
+    width: 80%;
+    border-radius: 20px;
+}
+
+.skeletonDiv3 {
+    position: relative;
+    height: 522px;
+    width: 20%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* responsive  */
 
@@ -253,10 +331,11 @@
     .swiper-wrapper {
         max-height: 65vh;
     }
-    .sellAllDetails{
+
+    .sellAllDetails {
         display: none;
     }
-    
+
     .swiper-slide {
         width: 300px !important;
         min-height: 450px !important;

@@ -8,6 +8,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Button from '../components/buttons/Button.jsx';
 import SubHeader from '../components/Nav/SubHeader.jsx';
+import WatchlistModel from '../components/card/WatchlistModel.jsx';
 
 
 const Home = () => {
@@ -235,6 +236,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <WatchlistModel />
 
       <LGScard truep={true} data={dataL} sectiontitle={"Titles from different languages"} />
       <LGScard truep={false} data={dataG} sectiontitle={"Titles from different genres"} />

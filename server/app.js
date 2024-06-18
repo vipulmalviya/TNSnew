@@ -7,11 +7,13 @@ const path = require("path");
 const usersRouter = require("./routes/usersRouter");
 const movieRouter = require("./routes/movieRouter");
 const watchlistRouter = require("./routes/watchlistRouter");
+const userModal = require("./models/userModal");
 const cors = require('cors');
 const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 const mongoose = require('mongoose');
+
 
 dotenv.config();
 
