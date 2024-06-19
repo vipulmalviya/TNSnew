@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
-const WatchlistModel = () => {
+const WatchlistModel = ({ passFunction }) => {
 
     const [watchlists, setWatchlists] = useState([]);
     const API = import.meta.env.VITE_APP_URI_API;
@@ -24,7 +24,7 @@ const WatchlistModel = () => {
         <>
             <div className='watchlistModel d-flex align-items-center justify-contente-center p-3'>
                 <ul className='watchlistModel_ul'>
-                    {watchlists?.map((elem, index) => <li key={index}>{elem.watchlistName}</li>)}
+                    {watchlists?.map((elem, index) => <li onClick={() => passFunction(elem._id)} key={index}>{elem.watchlistName}</li>)}
                 </ul>
             </div>
         </>

@@ -3,17 +3,27 @@ import "./Card.css"
 import Button from '../buttons/Button'
 import { Navigate, useNavigate } from 'react-router-dom'
 import WatchlistModel from './WatchlistModel'
+import axios from 'axios'
 
 
 
 const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode }) => {
     const [ChangeBtn, setChangeBtn] = useState(false)
-    const [SelectWatchlist, setSelectWatchlist] = useState()
- 
-    const selectWatchlistFunc = (params) => {
-        console.log(params.target.dataset);
-        setSelectWatchlist(true);
-        setChangeBtn(true);
+    const [showCards, setShowCards] = useState(true)
+    const [movieid, setMovieid] = useState(null)
+    const [cardid, setCardid] = useState(null)
+
+    console.log(movieid, cardid);
+    const API = import.meta.env.VITE_APP_URI_API;
+
+    const  PushMovieFunc = (e) => {
+        setCardid(e)
+        axios.post(`${API}/update-watchlist`, {
+            movieId: movieid,
+            cardId: cardid,
+        }).then(result => {
+            console.log(result);
+        }).catch(err => console.log(err));
     }
 
 
@@ -27,16 +37,16 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode 
     return (
 
         <>
-            {SelectWatchlist && <WatchlistModel />}
+            {showCards && <WatchlistModel passFunction={PushMovieFunc} />}
             <div className="singlecard" key={index}>
                 {/* <div onClick={() => navigate(`/${mediaId}`)} className='cardbg d-flex' */}
-                <div  className='cardbg d-flex'
+                <div className='cardbg d-flex'
                     style={{
                         background: `url(${Poster})`
                     }}>
                     <img style={{ margin: ".5rem .5rem", zIndex: 1, }} loading='lazy' height={"23px"} width={"23px"} src="images/done.svg" alt="doneicone" />
                     <div className='cardsBtn'>{
-                        <button className='mainbtn' onClick={selectWatchlistFunc} data-id={mediaId} value={value} colorProp={ChangeBtn}>
+                        <button className='mainbtn' onClick={() => setMovieid(mediaId)} value={value} colorProp={ChangeBtn}>
                             {ChangeBtn ? <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/fillbookmark.svg" alt="icone" />} Remove</> : <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/darkbookmark.svg" alt="icone" />} Add to Watchlist</>}
                         </button>
                     }
