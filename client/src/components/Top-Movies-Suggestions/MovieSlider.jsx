@@ -13,22 +13,22 @@ import { GoArrowRight } from 'react-icons/go';
 
 const MovieSlider = ({ title, type }) => {
 
-    const API = import.meta.env.VITE_APP_URI_API;
+    // const API = import.meta.env.VITE_APP_URI_API;
 
-    const [Movies, setMovies] = useState([]);
-    const fetchMovieData = async () => {
-        try {
-            const url = `${API}/api/movies`;
-            const response = await fetch(url);
-            const jsonData = await response.json();
-            setMovies(jsonData);
-        } catch (error) {
-            console.error('Error fetching movie data:', error);
-        }
-    };
-    useEffect(() => {
-        fetchMovieData();
-    }, [type]);
+    // const [Movies, setMovies] = useState([]);
+    // const fetchMovieData = async () => {
+    //     try {
+    //         const url = `${API}/api/movies`;
+    //         const response = await fetch(url);
+    //         const jsonData = await response.json();
+    //         setMovies(jsonData);
+    //     } catch (error) {
+    //         console.error('Error fetching movie data:', error);
+    //     }
+    // };
+    // useEffect(() => {
+    //     fetchMovieData();
+    // }, [type]);
 
 
     // const [Watchlist, setWatchlist] = useState([])

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { IoAddOutline } from 'react-icons/io5';
 
 const WatchlistModel = ({ passFunction }) => {
 
@@ -22,9 +23,15 @@ const WatchlistModel = ({ passFunction }) => {
 
     return (
         <>
-            <div className='watchlistModel d-flex align-items-center justify-contente-center p-3'>
-                <ul className='watchlistModel_ul'>
-                    {watchlists?.map((elem, index) => <li onClick={() => passFunction(elem._id)} key={index}>{elem.watchlistName}</li>)}
+            <div className='watchlistModel d-flex align-items-center justify-contente-center'>
+                <ul className='watchlistModel_ul d-flex flex-column '>
+                    <li><button className='d-flex align-items-center justify-content-start gap-2'><IoAddOutline /> Create watchlist</button></li>
+                        <hr />
+                    {watchlists?.map((elem, index) => <li key={index} className='d-flex align-items-center justify-content-start'>
+                        <button onClick={passFunction} data-id={elem._id} className='d-flex align-items-center justify-content-start'>
+                            {elem.watchlistName}
+                        </button>
+                    </li>)}
                 </ul>
             </div>
         </>

@@ -508,23 +508,23 @@ const HomeSlider = () => {
 
 
 
-  const API = import.meta.env.VITE_APP_URI_API;
+  // const API = import.meta.env.VITE_APP_URI_API;
 
-  const [Movies, setMovies] = useState([]);
+  // const [Movies, setMovies] = useState([]);
   // const apiKey = '07d7941833065b1ddd54a729aaa554e5';
-  const fetchMovieData = async () => {
-    try {
-      const url = `${API}/api/movies`;
-      const response = await fetch(url);
-      const jsonData = await response.json();
-      setMovies(jsonData);
-    } catch (error) {
-      console.error('Error fetching movie data:', error);
-    }
-  };
-  useEffect(() => {
-    fetchMovieData();
-  }, []);
+  // const fetchMovieData = async () => {
+  //   try {
+  //     const url = `${API}/api/movies`;
+  //     const response = await fetch(url);
+  //     const jsonData = await response.json();
+  //     setMovies(jsonData);
+  //   } catch (error) {
+  //     console.error('Error fetching movie data:', error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchMovieData();
+  // }, []);
 
 
 

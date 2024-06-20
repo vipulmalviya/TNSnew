@@ -12,7 +12,7 @@
     position: relative;
     border-radius: 10px !important;
     height: 348px !important;
-    width: 100% !important;
+    width: 101% !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
@@ -101,6 +101,25 @@
     align-self: flex-end;
 }
 
+.cardsBTN{
+    width: 100%;
+    height: 10%;
+    z-index: 1;
+}
+.cardsBTN button{
+    height: fit-content;
+    margin: .5rem;
+    display: none;
+}
+.cardsBTN button svg{
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+.singlecard:hover .cardsBTN button{
+    display: block;
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
 
 
 /* Experience Card  */
@@ -252,10 +271,11 @@
     text-align: left;
 
 }
-.chooseAvtarInput{
+
+.chooseAvtarInput {
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
 
@@ -323,31 +343,49 @@
 
 /* wathlistModel  */
 
-.watchlistModel{
+.watchlistModel {
     position: absolute;
     min-height: 50px;
-    max-width: 300px;
-    background-color: var(--nav-bg-color);
-    border-radius: 20px;
+    width: 100%;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    background: #e0e0e013;
     z-index: 10;
+    padding: .3rem;
 }
+
 .watchlistModel_ul {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
+    gap: .5rem;
 }
-.watchlistModel_ul li {
+
+.watchlistModel_ul li  {
+    border-radius: 8px;
+}
+.watchlistModel_ul li button {
     width: 100%;
     height: 100%;
     margin: 0;
     list-style: none;
     cursor: pointer;
-    padding: 10px;
-    border-radius: 12px;
+    padding: .3rem .5rem;
+    font-size: var(--p3-Paragraph);
+    font-weight: 400;
+    color: var(--text-light-color);
 }
+.watchlistModel_ul hr {
+    margin: 0;
+}
+
+.watchlistModel_ul li button svg {
+    font-size: 1.2rem;
+}
+
 .watchlistModel_ul li:hover {
-    background-color: var(--black-color);
+    background-color: #ffffff1a;
     color: var(--text-color);
 }
 
@@ -360,31 +398,35 @@
         width: 220px !important;
         height: 340px !important;
     }
+
     .singlecard>.cardbg {
         height: 90% !important;
         width: 100% !important;
     }
-    
+
 
 }
 
 @media screen and (max-width: 428px) {
 
-    .cardsBtn{
+    .cardsBtn {
         display: none;
     }
 
-    .logospan{
+    .logospan {
         display: none !important;
     }
-    .moviespan{
+
+    .moviespan {
         width: 100% !important;
     }
+
     .singlecard {
         height: 310px !important;
         width: 171px !important;
         padding: 0 .5rem !important;
     }
+
     .singlecard>.cardbg {
         border-radius: 10px !important;
         height: 256px !important;
@@ -395,7 +437,7 @@
         height: 300px !important;
     } */
 
-    .singlecard .movieDetails{
+    .singlecard .movieDetails {
         min-height: 100% !important;
     }
 

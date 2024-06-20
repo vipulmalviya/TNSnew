@@ -83,7 +83,7 @@ const List = ({ number, title, genres, year, duration, rating, userRating, tag, 
     onDrop(e, index);
   };
 
-  console.log(draggedItemIndex);
+  // console.log(draggedItemIndex);
 
   return (
     <>

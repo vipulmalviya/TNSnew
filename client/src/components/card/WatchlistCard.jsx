@@ -88,6 +88,30 @@ const WatchlistCard = ({ openList }) => {
         handleWatchlist()
     })
 
+    const [Id, setId] = useState()
+
+    const getManageCardId = (e) => {
+        setId(e.target.dataset)
+        // openList()
+
+        axios.post("/manageTitles",{
+            id:Id,
+
+        }).then(result => {
+            console.log(result);
+        }).catch(err => console.log(err));
+
+
+
+    }
+
+
+
+
+
+
+
+
 
     const colorArray = ["#282829", "#444D0D", "#294D0D", "#4D2C0D"];
     const getRandomColor = () => colorArray[Math.floor(Math.random() * colorArray.length)];
@@ -106,7 +130,7 @@ const WatchlistCard = ({ openList }) => {
                         <p>admin</p>
                     </div>
                     <div className='d-flex align-items-center justify-content-center gap-3'>
-                        <Button onclick={openList}>Manage</Button>
+                        <button className='mainbtn' onClick={getManageCardId} data-id={elem._id}>Manage</button>
                         <button className="position-relative"><FiMoreHorizontal onClick={() => setShowOption(index === ShowOption ? -1 : index)} style={{ color: "#FFFF", }} />
                             {ShowOption === index && <WathlistOptionCard icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
                         </button>

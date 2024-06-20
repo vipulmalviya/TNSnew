@@ -1,32 +1,51 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./Card.css"
 import Button from '../buttons/Button'
 import { Navigate, useNavigate } from 'react-router-dom'
 import WatchlistModel from './WatchlistModel'
 import axios from 'axios'
+import { IoMdMore } from "react-icons/io";
 
 
 
 const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode }) => {
     const [ChangeBtn, setChangeBtn] = useState(false)
-    const [showCards, setShowCards] = useState(true)
+    const [showCards, setShowCards] = useState(false)
     const [movieid, setMovieid] = useState(null)
     const [cardid, setCardid] = useState(null)
 
-    console.log(movieid, cardid);
     const API = import.meta.env.VITE_APP_URI_API;
 
-    const  PushMovieFunc = (e) => {
-        setCardid(e)
+    const PushMovieFunc = (e) => {
+        setCardid(e.target.dataset)
+        console.log(movieid, cardid);
         axios.post(`${API}/update-watchlist`, {
             movieId: movieid,
             cardId: cardid,
         }).then(result => {
-            console.log(result);
+            alert(result);
         }).catch(err => console.log(err));
     }
 
+    const cardRef = useRef(null);
+    function showCardFunc(e) {
+        setMovieid(e)
+        setShowCards(!showCards)
+    }
+    const handleClickOutside = (event) => {
 
+      if (cardRef.current && !cardRef.current.contains(event.target)) {
+        setShowCards(false);
+      }
+    };
+
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, []);
 
     const fullDate = year;
     const dateObject = new Date(fullDate);
@@ -37,21 +56,26 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode 
     return (
 
         <>
-            {showCards && <WatchlistModel passFunction={PushMovieFunc} />}
-            <div className="singlecard" key={index}>
+            <div ref={cardRef}  className="singlecard" key={index}>
                 {/* <div onClick={() => navigate(`/${mediaId}`)} className='cardbg d-flex' */}
                 <div className='cardbg d-flex'
                     style={{
                         background: `url(${Poster})`
                     }}>
-                    <img style={{ margin: ".5rem .5rem", zIndex: 1, }} loading='lazy' height={"23px"} width={"23px"} src="images/done.svg" alt="doneicone" />
+                    <div className='cardsBTN d-flex justify-content-between'>
+                        <img  style={{ margin: ".5rem .5rem", zIndex: 1, }} loading='lazy' height={"23px"} width={"23px"} src="images/done.svg" alt="doneicone" />
+                        <button onClick={() => showCardFunc(mediaId)}><IoMdMore /></button>
+                    </div>
                     <div className='cardsBtn'>{
-                        <button className='mainbtn' onClick={() => setMovieid(mediaId)} value={value} colorProp={ChangeBtn}>
+                        <button className='mainbtn'  value={value} colorProp={ChangeBtn}>
                             {ChangeBtn ? <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/fillbookmark.svg" alt="icone" />} Remove</> : <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/darkbookmark.svg" alt="icone" />} Add to Watchlist</>}
                         </button>
                     }
                     </div>
+                    {showCards && <WatchlistModel passFunction={PushMovieFunc} />}
+
                 </div>
+
                 <div className='movieDetails d-flex justify-content-between flex-column'>
                     <div className=' d-flex justify-content-between'>
                         <span className='moviespan position-relative gap-1 h-75  d-flex justify-content-start align-items-start flex-column '>
@@ -64,7 +88,6 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode 
                         </span>
                     </div>
                 </div>
-
             </div>
         </>
     )

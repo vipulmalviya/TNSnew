@@ -792,7 +792,7 @@ section {
 
 .listHead p {
   font-size: var(--p1-Pragraph) !important;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 19.54px;
   text-align: left;
 }
