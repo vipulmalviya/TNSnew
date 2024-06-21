@@ -13,7 +13,7 @@ const WatchlistSchema = new mongoose.Schema({
         trim: true
     },
     movieTitles: [{
-        type: String,
+        type: Array,
     }]
 }, {
     timestamps: true

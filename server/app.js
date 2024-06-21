@@ -13,8 +13,10 @@ const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config();
 
 const PORT = 3000;

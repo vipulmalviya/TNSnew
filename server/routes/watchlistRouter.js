@@ -20,7 +20,7 @@ router.post('/watchlist-upload', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-    
+
 })
 
 // watchlist fetch route
@@ -39,14 +39,8 @@ router.get('/watchlist-get', async (req, res) => {
 // update wathlist route
 
 router.post('/update-watchlist', async (req, res) => {
-    const { cardId, movieId } = req.body;
-    console.log(cardId);
+    const { cardId, movieDetails } = req.body;
     try {
-        const movie = await MovieModel.findById(movieId);
-        if (!movie) {
-            return res.status(404).json({ error: 'Movie not found' });
-        }
-
         let validCardId = cardId;
         if (typeof cardId === 'object' && cardId.id) {
             validCardId = cardId.id;
@@ -54,7 +48,7 @@ router.post('/update-watchlist', async (req, res) => {
 
         const result = await WatchlistModel.updateOne(
             { _id: validCardId },
-            { $push: { movieTitles: movieId } }
+            { $push: { movieTitles: movieDetails } }
         );
 
         res.json(result);
@@ -64,16 +58,35 @@ router.post('/update-watchlist', async (req, res) => {
     }
 });
 
-router.get("/manageTitles",async(req,res)=>{
-    const {id} = req.body
+// router.get("/manageTitles", async (req, res) => {
+//     console.log("Request body:", req.body);
+//     const { Id } = req.body;
+//     console.log(Id);
+//     try {
+//         const watchlistdata = await WatchlistModel.findById(Id);
+//         if (!watchlistdata) {
+//             return res.status(404).json({ error: 'Watchlist not found' });
+//         }
+//         res.status(200).json(watchlistdata);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// });
+
+router.get("/manageTitles/:id", async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
     try {
-        console.log(id);
         const watchlistdata = await WatchlistModel.findById(id);
+
+        if (!watchlistdata) {
+            return res.status(404).json({ error: 'Watchlist not found' });
+        }
+
         res.status(200).json(watchlistdata);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-})
-
+});
 
 module.exports = router;

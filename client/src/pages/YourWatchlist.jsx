@@ -13,6 +13,7 @@ import { IoMdMore } from 'react-icons/io';
 import WathlistOptionCard from '../components/card/WathlistOptionCard.jsx';
 import { FiTag } from 'react-icons/fi';
 import List from '../components/dragableList/List.jsx';
+import axios from 'axios';
 
 
 
@@ -166,7 +167,20 @@ const YourWatchlist = () => {
     setIsCardsShow(!isCardsShow)
   }
 
+  const API = import.meta.env.VITE_APP_URI_API;
 
+
+  const [titles, setTitles] = useState([]);
+
+  const getManageCardId = (e) => {
+
+    axios.get(`${API}/manageTitles/${e}`)
+      .then(result => {
+        setTitles(result.data);
+      })
+      .catch(err => console.log(err));
+      // mangefunc()
+  };
 
 
 
@@ -246,11 +260,11 @@ const YourWatchlist = () => {
             <p onClick={modalshow} className='watchlistbtn mb-0'><IoAddCircleOutline />Create New Watchlist</p>
           </div>
           <div className='cardContaienr d-grid'>
-            <WatchlistCard openList={mangefunc} />
+            <WatchlistCard openList={mangefunc} getManageCardId={getManageCardId} />
           </div>
         </div>
       </section>
-      {ModalShow && <Modal onclick={modalshow} onclick2={modalshow} />}
+      {ModalShow && <Modal onclick2={modalshow} />}
       <section>
         <div className="container">
           <div className='cardHeaders d-flex'>

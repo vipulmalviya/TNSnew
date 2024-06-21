@@ -579,7 +579,7 @@ const MovieSlider = ({ title, type }) => {
                     swipeable
                     removeArrowOnDeviceType={["tablet", "mobile"]}>
                     {Lcard?.map((elem, index) =>
-                        <Card value={index} key={index} Poster={elem.moviePoster} Title={elem.name} catagory={elem.genre} watch={elem.popularity} year={elem.releaseDate} episode={elem.episode} btn={true} mediaId={elem._id.$oid} />
+                        <Card value={index} key={index} Poster={elem.moviePoster} Title={elem.name} catagory={elem.genre} watch={elem.popularity} year={elem.releaseDate} episode={elem.episode} btn={true} mediaId={elem._id.$oid} elem={elem} />
                     )}
                 </Carousel>}
             </div>
