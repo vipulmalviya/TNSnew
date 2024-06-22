@@ -75,7 +75,7 @@ router.post('/update-watchlist', async (req, res) => {
 
 router.get("/manageTitles/:id", async (req, res) => {
     const { id } = req.params;
-    console.log(id);
+
     try {
         const watchlistdata = await WatchlistModel.findById(id);
 

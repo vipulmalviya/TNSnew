@@ -67,7 +67,7 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode,
                         <button onClick={() => showCardFunc(elem)}><IoMdMore /></button>
                     </div>
                     <div className='cardsBtn'>{
-                        <button className='mainbtn' value={value} colorProp={ChangeBtn}>
+                        <button className='mainbtn' value={value}>
                             {ChangeBtn ? <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/fillbookmark.svg" alt="icone" />} Remove</> : <>{<img loading='lazy' height={"15px"} width={"15px"} src="images/darkbookmark.svg" alt="icone" />} Add to Watchlist</>}
                         </button>
                     }

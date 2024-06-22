@@ -21,7 +21,6 @@ const WatchlistModel = ({ passFunction }) => {
         fetchWatchlist();
     }, []);
 
-    console.log(watchlists);
     return (
         <>
             <div className='watchlistModel d-flex align-items-center justify-contente-center'>

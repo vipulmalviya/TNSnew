@@ -5,7 +5,7 @@ import { MdDone, MdOutlineDragIndicator } from 'react-icons/md';
 import { IoMdMore } from 'react-icons/io';
 import WathlistOptionCard from "../card/WathlistOptionCard";
 
-const List = ({ number, title, genres, year, duration, rating, userRating, tag, onDragStart, onDragOver, onDrop, index, image, draggedItemIndex }) => {
+const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }) => {
   const [showOption, setShowOption] = useState(false);
   const [text, setText] = useState('Masterpiece');
   const [isEditing, setIsEditing] = useState(false);
@@ -83,7 +83,6 @@ const List = ({ number, title, genres, year, duration, rating, userRating, tag, 
     onDrop(e, index);
   };
 
-  // console.log(draggedItemIndex);
 
   return (
     <>
@@ -98,19 +97,19 @@ const List = ({ number, title, genres, year, duration, rating, userRating, tag, 
         {draggedItemIndex === index && indicatorPosition === 'top' && (
           <div className="drag-indicator-top"></div>
         )}
-        <div className='div2 d-flex align-items-center justify-content-start gap-3'>
-          <h4 className='div1 number d-flex align-items-center justify-content-center'><MdOutlineDragIndicator className="hinglight" /> {number}</h4>
+        <div className='div2 d-flex align-items-center justify-content-start gap-5'>
+          <div className='div1 number d-flex align-items-center justify-content-center'><MdOutlineDragIndicator className="hinglight" />{index + 1}</div>
           <div className="d-flex align-items-center justify-content-start gap-2">
-            <img loading="lazy" height={"80px"} width={"50px"} src={image} alt="Movie Poster" style={{ borderRadius: "5px" }} />
+            <img loading="lazy" height={"80px"} width={"50px"} src={item[0].moviePoster} alt="Movie Poster" style={{ borderRadius: "5px" }} />
             <div className='d-flex align-items-start justify-content-center flex-column gap-1'>
-              <h4 className='mb-0'>{title}</h4>
-              <p className='mb-0'> {genres}</p>
-              <p className='mb-0'> {year} . {duration}</p>
+              <h4 className='mb-0'>{item[0].name}</h4>
+              <p className='mb-0'> {item[0].genre}</p>
+              <p className='mb-0'> {item[0].releaseDate} . 2h 22m</p>
             </div>
           </div>
         </div>
-        <h4 className='div3 d-flex align-items-center justify-content-center'>{rating}</h4>
-        <h4 className='div4 d-flex align-items-center justify-content-center'>{userRating}</h4>
+        <h4 className='div3 d-flex align-items-center justify-content-center'>92.5</h4>
+        <h4 className='div4 d-flex align-items-center justify-content-center'>98%(1.2k)</h4>
         {isEditing ? (
           <>
             <input

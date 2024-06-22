@@ -714,8 +714,9 @@ section {
 }
 
 .watchlistInfoSection {
+  position: relative;
   background: #444D0D;
-  min-height: 35vh;
+  min-height: 28vh;
 }
 
 .watchlistInfoSection .wathlistOptions {
@@ -782,12 +783,15 @@ section {
 }
 
 .listHead {
+  bottom: 0;
+  position: absolute;
   display: flex;
   cursor: pointer;
-  border-radius: 10px;
   width: 100%;
   min-height: 10px;
-  gap: 90px;
+  gap: 150px;
+  background: #FFFFFF0D;
+  border:1px solid rgba(128, 128, 128, 0.409) ;
 }
 
 .listHead p {
@@ -795,15 +799,13 @@ section {
   font-weight: 500;
   line-height: 19.54px;
   text-align: left;
+
 }
 
 .listItemsSection {
-  margin-top: -4rem;
-  padding-top: 1rem !important;
+  margin-top: 0rem;
   background: #FFFFFF0D;
 }
-
-
 
 .cardHeaders {
   width: 100%;

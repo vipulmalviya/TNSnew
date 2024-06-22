@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 import { LuPen } from 'react-icons/lu';
 import { IoMdMore } from 'react-icons/io';
 import WathlistOptionCard from '../components/card/WathlistOptionCard.jsx';
-import { FiTag } from 'react-icons/fi';
+import { FiServer, FiTag } from 'react-icons/fi';
 import List from '../components/dragableList/List.jsx';
 import axios from 'axios';
 
@@ -111,16 +111,33 @@ const responsive = {
 };
 const YourWatchlist = () => {
 
-  const [items, setItems] = useState([
-    { number: 1, title: 'Movie 1', genres: 'Action', year: 2021, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-    { number: 2, title: 'Movie 2', genres: 'Action', year: 2022, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-    { number: 3, title: 'Movie 3', genres: 'Action', year: 2023, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-    { number: 4, title: 'Movie 4', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-    { number: 5, title: 'Movie 5', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-    { number: 6, title: 'Movie 6', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-    { number: 7, title: 'Movie 7', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-    { number: 8, title: 'Movie 8', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  ]);
+  // const [items, setItems] = useState([
+  //   { number: 1, title: 'Movie 1', genres: 'Action', year: 2021, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  //   { number: 2, title: 'Movie 2', genres: 'Action', year: 2022, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  //   { number: 3, title: 'Movie 3', genres: 'Action', year: 2023, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  //   { number: 4, title: 'Movie 4', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  //   { number: 5, title: 'Movie 5', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  //   { number: 6, title: 'Movie 6', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  //   { number: 7, title: 'Movie 7', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  //   { number: 8, title: 'Movie 8', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
+  // ]);
+
+
+  const API = import.meta.env.VITE_APP_URI_API;
+
+
+  const [titles, setTitles] = useState([]);
+  const [WatchlistDetails, setWatchlistDetails] = useState([]);
+
+  const getManageCardId = (e) => {
+    axios.get(`${API}/manageTitles/${e}`)
+      .then(result => {
+        setTitles(result.data.movieTitles);
+        setWatchlistDetails(result.data);
+      })
+      .catch(err => console.log(err));
+    mangefunc()
+  };
 
 
   const handleDragStart = (e, index) => {
@@ -134,7 +151,7 @@ const YourWatchlist = () => {
   const [draggedItemIndex, setDraggedItemIndex] = useState(null);;
   const handleDrop = (e, index) => {
     const draggedIndex = e.dataTransfer.getData('text/plain');
-    const newItems = [...items];
+    const newItems = [...titles];
     const [draggedItem] = newItems.splice(draggedIndex, 1);
     newItems.splice(index, 0, draggedItem);
 
@@ -143,7 +160,7 @@ const YourWatchlist = () => {
       number: idx + 1
     }));
     setDraggedItemIndex(null);
-    setItems(updatedItems);
+    setTitles(updatedItems);
   };
 
   const [ShowOption, setShowOption] = useState(false)
@@ -163,36 +180,22 @@ const YourWatchlist = () => {
     setManage(!Manage)
   }
 
-  function manage() {
-    setIsCardsShow(!isCardsShow)
-  }
+  // function manage() {
+  //   setIsCardsShow(!isCardsShow)
+  // }
 
-  const API = import.meta.env.VITE_APP_URI_API;
-
-
-  const [titles, setTitles] = useState([]);
-
-  const getManageCardId = (e) => {
-
-    axios.get(`${API}/manageTitles/${e}`)
-      .then(result => {
-        setTitles(result.data);
-      })
-      .catch(err => console.log(err));
-      // mangefunc()
-  };
 
 
 
   return (
     <fregment >
       {Manage && <>
-        <section className='watchlistInfoSection d-flex align-items-start justify-content-center '>
+        <section className='watchlistInfoSection d-flex align-items-center justify-content-center '>
           <div className="container d-flex align-items-center justify-content-start">
             <div className='d-flex align-items-center justify-content-between w-100'>
               <div className="watchlistsInfo d-flex align-items-center justify-content-start">
                 <div className="watchlistAvatar mx-3">
-                  <img height={"100%"} width={"100%"} src="https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?w=740&t=st=1716545127~exp=1716545727~hmac=b06f7f7f6ababecdd569f3849519e0f8971d75936cab68ca367eca074bbea299" alt="" />
+                  <img height={"100%"} width={"100%"} src={WatchlistDetails.watchlistAvatar} alt={WatchlistDetails.watchlistName} />
                   <button className='AvatarBtn position-absolute d-flex flex-column align-items-center justify-content-center'>
                     <LuPen />
                     Choose Avatar
@@ -200,9 +203,8 @@ const YourWatchlist = () => {
                 </div>
                 <div className='pagehadding'>
                   <p className='mb-0'>Watchlist</p>
-                  <h2 onClick={modalshow} style={{ cursor: "pointer", }}>Crime - Thriller Movies</h2>
+                  <h2 onClick={modalshow} style={{ cursor: "pointer", }}>{WatchlistDetails.watchlistName}</h2>
                   {ModalShow && <Modal prop={ModalShow} />}
-
                   <p className=' d-flex align-items-center justify-content-start gap-2'><span>Rahul Malviya</span> . <span>8 Movies</span> . <span>2 TV Series</span></p>
                 </div>
               </div>
@@ -211,9 +213,29 @@ const YourWatchlist = () => {
               </button>
             </div>
           </div>
+          <div className='listHead'>
+            <div className='container d-flex justify-content-between my-3'>
+              <div className='div2 d-flex align-items-center justify-content-start gap-5' >
+                <div className='mx-3 d-flex align-items-center'>#</div>
+                <div className='d-flex align-items-center justify-content-center gap-2 '>
+                  <FiServer />
+                  <div className='d-flex align-items-center justify-content-center'>Title</div>
+                </div>
+              </div>
+              <div className='div3 d-flex align-items-center justify-content-center'>
+                <img height={"20px"} width={"45px"} src="images/latestlogo.svg" alt="" />
+              </div>
+              <div className='div4 d-flex align-content-center justify-content-center gap-2 mb-0'><svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.83333 14.6668V13.0002C9.83333 10.699 7.96785 8.8335 5.66667 8.8335C3.36548 8.8335 1.5 10.699 1.5 13.0002V14.6668H9.83333ZM9.83333 14.6668H16.5V13.8335C16.5 11.3789 14.6345 9.66683 12.3333 9.66683C11.1556 9.66683 10.0919 10.1881 9.33411 11.0261M8.16667 3.8335C8.16667 5.21421 7.04738 6.3335 5.66667 6.3335C4.28595 6.3335 3.16667 5.21421 3.16667 3.8335C3.16667 2.45278 4.28595 1.3335 5.66667 1.3335C7.04738 1.3335 8.16667 2.45278 8.16667 3.8335ZM14 5.50016C14 6.42064 13.2538 7.16683 12.3333 7.16683C11.4129 7.16683 10.6667 6.42064 10.6667 5.50016C10.6667 4.57969 11.4129 3.8335 12.3333 3.8335C13.2538 3.8335 14 4.57969 14 5.50016Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+                User Rating</div>
+              <div className="div5 gap-1 d-flex align-items-center justify-content-center mb-0"><FiTag /> Tag</div>
+              <div className='mb-0 div6 d-flex align-items-center justify-content-center gap-4'>More Option</div>
+            </div>
+          </div>
         </section>
         <section className='listItemsSection'>
-          <div className='listHead container d-flex align-items-center justify-content-start my-3'>
+          {/* <div className='listHead container d-flex align-items-center justify-content-start my-3'>
             <p className='div2 mb-0 d-flex align-items-center justify-content-start gap-3'>
               <p className='div1 number mb-0 d-flex align-items-center justify-content-center mx-3'>#</p>
               <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -230,21 +252,13 @@ const YourWatchlist = () => {
               User Rating</p>
             <p className="div5 gap-1 d-flex align-content-center justify-content-center mb-0"><FiTag /> Tag</p>
             <p className='mb-0 div6 d-flex align-items-center justify-content-center gap-4'>More Option</p>
-          </div>
+          </div> */}
           <div>
-            {items.map((item, index) => (
+            {titles.map((item, index) => (
               <List
-                key={item.number}
+                item={item}
                 index={index}
-                number={item.number}
-                title={item.title}
-                genres={item.genres}
-                year={item.year}
-                duration={item.duration}
-                rating={item.rating}
-                userRating={item.userRating}
-                tag={item.tag}
-                image={item.imageUrl}
+                key={index}
                 onDragStart={handleDragStart}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
@@ -260,7 +274,7 @@ const YourWatchlist = () => {
             <p onClick={modalshow} className='watchlistbtn mb-0'><IoAddCircleOutline />Create New Watchlist</p>
           </div>
           <div className='cardContaienr d-grid'>
-            <WatchlistCard openList={mangefunc} getManageCardId={getManageCardId} />
+            <WatchlistCard openList={mangefunc} ManageCardId={getManageCardId} />
           </div>
         </div>
       </section>
@@ -274,7 +288,6 @@ const YourWatchlist = () => {
           <Carousel className="MovieCards d-flex"
             responsive={responsive}
             removeArrowOnDeviceType={["tablet", "mobile"]}
-
           >
             {data.map((elem, index) => <Card key={index} Poster={elem.Poster} Title={elem.Title || elem.original_name} catagory={elem.catagory} watch={elem.watch} btn={true} year={elem.Release_Date} />)}
           </Carousel>

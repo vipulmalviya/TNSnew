@@ -23,8 +23,9 @@
 
 .div2 {
     height: 100%;
-    width: 100%;
+    width: 50%;
 }
+
 
 .div3 {
     height: 100%;
@@ -47,7 +48,7 @@
     min-width: 120px;
 }
 
-.listItem h4 {
+.listItem .number ,h4 {
     font-size: var(--p1-Paragraph);
     font-weight: 700;
     line-height: 24.42px;
