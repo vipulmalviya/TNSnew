@@ -111,21 +111,10 @@ const responsive = {
 };
 const YourWatchlist = () => {
 
-  // const [items, setItems] = useState([
-  //   { number: 1, title: 'Movie 1', genres: 'Action', year: 2021, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  //   { number: 2, title: 'Movie 2', genres: 'Action', year: 2022, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  //   { number: 3, title: 'Movie 3', genres: 'Action', year: 2023, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  //   { number: 4, title: 'Movie 4', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  //   { number: 5, title: 'Movie 5', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  //   { number: 6, title: 'Movie 6', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  //   { number: 7, title: 'Movie 7', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  //   { number: 8, title: 'Movie 8', genres: 'Action', year: 2024, duration: '2h', rating: '92.5', userRating: '98%(1.2k)', tag: 'Masterpiece', imageUrl: "images/12fail.png", },
-  // ]);
 
 
   const API = import.meta.env.VITE_APP_URI_API;
-
-
+  // for fetch movies
   const [titles, setTitles] = useState([]);
   const [WatchlistDetails, setWatchlistDetails] = useState([]);
 
@@ -134,11 +123,19 @@ const YourWatchlist = () => {
       .then(result => {
         setTitles(result.data.movieTitles);
         setWatchlistDetails(result.data);
+        if (result) {
+          setManage(true)
+        } else {
+          setManage(false)
+        }
       })
       .catch(err => console.log(err));
-    mangefunc()
+    // mangefunc()
   };
+  const [Manage, setManage] = useState(false);
 
+
+  //  this all things for draggebale list items
 
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData('text/plain', index);
@@ -166,7 +163,6 @@ const YourWatchlist = () => {
   const [ShowOption, setShowOption] = useState(false)
   const [ModalShow, setModalShow] = useState(false)
   const [isCardsShow, setIsCardsShow] = useState(true);
-  const [Manage, setManage] = useState(false);
 
   function showoptin() {
     setShowOption(!ShowOption)
@@ -175,17 +171,6 @@ const YourWatchlist = () => {
   function modalshow() {
     setModalShow(!ModalShow)
   }
-
-  function mangefunc() {
-    setManage(!Manage)
-  }
-
-  // function manage() {
-  //   setIsCardsShow(!isCardsShow)
-  // }
-
-
-
 
   return (
     <fregment >
@@ -226,7 +211,7 @@ const YourWatchlist = () => {
                 <img height={"20px"} width={"45px"} src="images/latestlogo.svg" alt="" />
               </div>
               <div className='div4 d-flex align-content-center justify-content-center gap-2 mb-0'><svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.83333 14.6668V13.0002C9.83333 10.699 7.96785 8.8335 5.66667 8.8335C3.36548 8.8335 1.5 10.699 1.5 13.0002V14.6668H9.83333ZM9.83333 14.6668H16.5V13.8335C16.5 11.3789 14.6345 9.66683 12.3333 9.66683C11.1556 9.66683 10.0919 10.1881 9.33411 11.0261M8.16667 3.8335C8.16667 5.21421 7.04738 6.3335 5.66667 6.3335C4.28595 6.3335 3.16667 5.21421 3.16667 3.8335C3.16667 2.45278 4.28595 1.3335 5.66667 1.3335C7.04738 1.3335 8.16667 2.45278 8.16667 3.8335ZM14 5.50016C14 6.42064 13.2538 7.16683 12.3333 7.16683C11.4129 7.16683 10.6667 6.42064 10.6667 5.50016C10.6667 4.57969 11.4129 3.8335 12.3333 3.8335C13.2538 3.8335 14 4.57969 14 5.50016Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M9.83333 14.6668V13.0002C9.83333 10.699 7.96785 8.8335 5.66667 8.8335C3.36548 8.8335 1.5 10.699 1.5 13.0002V14.6668H9.83333ZM9.83333 14.6668H16.5V13.8335C16.5 11.3789 14.6345 9.66683 12.3333 9.66683C11.1556 9.66683 10.0919 10.1881 9.33411 11.0261M8.16667 3.8335C8.16667 5.21421 7.04738 6.3335 5.66667 6.3335C4.28595 6.3335 3.16667 5.21421 3.16667 3.8335C3.16667 2.45278 4.28595 1.3335 5.66667 1.3335C7.04738 1.3335 8.16667 2.45278 8.16667 3.8335ZM14 5.50016C14 6.42064 13.2538 7.16683 12.3333 7.16683C11.4129 7.16683 10.6667 6.42064 10.6667 5.50016C10.6667 4.57969 11.4129 3.8335 12.3333 3.8335C13.2538 3.8335 14 4.57969 14 5.50016Z" stroke="white" stroke-width="1.5" stroke-linecap="round" strokeLinejoin="round" />
               </svg>
                 User Rating</div>
               <div className="div5 gap-1 d-flex align-items-center justify-content-center mb-0"><FiTag /> Tag</div>
@@ -235,24 +220,6 @@ const YourWatchlist = () => {
           </div>
         </section>
         <section className='listItemsSection'>
-          {/* <div className='listHead container d-flex align-items-center justify-content-start my-3'>
-            <p className='div2 mb-0 d-flex align-items-center justify-content-start gap-3'>
-              <p className='div1 number mb-0 d-flex align-items-center justify-content-center mx-3'>#</p>
-              <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.5 3.8335C1.5 3.05693 1.5 2.66864 1.62687 2.36236C1.79602 1.95398 2.12048 1.62952 2.52886 1.46036C2.83515 1.3335 3.22343 1.3335 4 1.3335H14C14.7766 1.3335 15.1649 1.3335 15.4711 1.46036C15.8795 1.62952 16.204 1.95398 16.3731 2.36236C16.5 2.66864 16.5 3.05693 16.5 3.8335C16.5 4.61007 16.5 4.99835 16.3731 5.30464C16.204 5.71302 15.8795 6.03747 15.4711 6.20663C15.1649 6.3335 14.7766 6.3335 14 6.3335H4C3.22343 6.3335 2.83515 6.3335 2.52886 6.20663C2.12048 6.03747 1.79602 5.71302 1.62687 5.30464C1.5 4.99835 1.5 4.61007 1.5 3.8335Z" stroke="white" stroke-width="1.5" />
-                <path d="M1.5 12.1668C1.5 11.3903 1.5 11.002 1.62687 10.6957C1.79602 10.2873 2.12048 9.96285 2.52886 9.7937C2.83515 9.66683 3.22343 9.66683 4 9.66683H14C14.7766 9.66683 15.1649 9.66683 15.4711 9.7937C15.8795 9.96285 16.204 10.2873 16.3731 10.6957C16.5 11.002 16.5 11.3903 16.5 12.1668C16.5 12.9434 16.5 13.3317 16.3731 13.638C16.204 14.0463 15.8795 14.3708 15.4711 14.54C15.1649 14.6668 14.7766 14.6668 14 14.6668H4C3.22343 14.6668 2.83515 14.6668 2.52886 14.54C2.12048 14.3708 1.79602 14.0463 1.62687 13.638C1.5 13.3317 1.5 12.9434 1.5 12.1668Z" stroke="white" stroke-width="1.5" />
-              </svg>
-              Title</p>
-            <div className='div3 d-flex align-content-center justify-content-center'>
-              <img height={"20px"} width={"45px"} src="images/latestlogo.svg" alt="" />
-            </div>
-            <p className='div4  d-flex align-content-center justify-content-center gap-2 mb-0'><svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9.83333 14.6668V13.0002C9.83333 10.699 7.96785 8.8335 5.66667 8.8335C3.36548 8.8335 1.5 10.699 1.5 13.0002V14.6668H9.83333ZM9.83333 14.6668H16.5V13.8335C16.5 11.3789 14.6345 9.66683 12.3333 9.66683C11.1556 9.66683 10.0919 10.1881 9.33411 11.0261M8.16667 3.8335C8.16667 5.21421 7.04738 6.3335 5.66667 6.3335C4.28595 6.3335 3.16667 5.21421 3.16667 3.8335C3.16667 2.45278 4.28595 1.3335 5.66667 1.3335C7.04738 1.3335 8.16667 2.45278 8.16667 3.8335ZM14 5.50016C14 6.42064 13.2538 7.16683 12.3333 7.16683C11.4129 7.16683 10.6667 6.42064 10.6667 5.50016C10.6667 4.57969 11.4129 3.8335 12.3333 3.8335C13.2538 3.8335 14 4.57969 14 5.50016Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-              User Rating</p>
-            <p className="div5 gap-1 d-flex align-content-center justify-content-center mb-0"><FiTag /> Tag</p>
-            <p className='mb-0 div6 d-flex align-items-center justify-content-center gap-4'>More Option</p>
-          </div> */}
           <div>
             {titles.map((item, index) => (
               <List
@@ -274,7 +241,7 @@ const YourWatchlist = () => {
             <p onClick={modalshow} className='watchlistbtn mb-0'><IoAddCircleOutline />Create New Watchlist</p>
           </div>
           <div className='cardContaienr d-grid'>
-            <WatchlistCard openList={mangefunc} ManageCardId={getManageCardId} />
+            <WatchlistCard ManageCardId={getManageCardId} />
           </div>
         </div>
       </section>

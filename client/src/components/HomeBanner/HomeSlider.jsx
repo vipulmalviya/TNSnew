@@ -250,7 +250,7 @@ const Lcard = [
     "writtenBy": "Wes Anderson (screenplay), Hugo Guinness (story)",
     "cinematographyBy": "Robert Yeoman",
     "moviePoster": "https://upload.wikimedia.org/wikipedia/en/1/1c/The_Grand_Budapest_Hotel.png",
-    "movieBanner": "https://media.themoviedb.org/t/p/w1920_and_h800_multi_faces/5vPW6MPAyCFd84FEQQgtPDmVDPQ.jpg",
+    "movieBanner": "https://i.pinimg.com/originals/0f/a5/65/0fa565446b13069325d959f191e603e6.jpg",
     "awards": [
       {
         "award": "Oscar",

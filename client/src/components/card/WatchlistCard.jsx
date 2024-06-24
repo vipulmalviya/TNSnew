@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Component, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../buttons/Button'
 import "./Card.css"
@@ -44,12 +44,13 @@ const WatchlistCard = ({ ManageCardId }) => {
 
     const API = import.meta.env.VITE_APP_URI_API;
 
+    // for options model close outside the Component
     const [ShowOption, setShowOption] = useState(false)
     const wrapperRef = useRef(null);
     useEffect(() => {
         function handleClickOutside(event) {
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-                setShowOption(-1);
+                // setShowOption(-1);
             }
         }
 
@@ -60,6 +61,7 @@ const WatchlistCard = ({ ManageCardId }) => {
     }, [wrapperRef]);
 
 
+    // fot fetch wathclists 
     const [watchlists, setWatchlists] = useState([]);
 
     const fetchWatchlist = async () => {
@@ -76,6 +78,8 @@ const WatchlistCard = ({ ManageCardId }) => {
         fetchWatchlist();
     }, []);
 
+
+    // for handle navigation on wathliscards length
     const navigate = useNavigate()
     const handleWatchlist = () => {
         if (watchlists.length >= 0) {
@@ -86,7 +90,7 @@ const WatchlistCard = ({ ManageCardId }) => {
     }
     useEffect(() => {
         handleWatchlist()
-    })
+    },[])
   
 
     // const colorArray = ["#282829", "#444D0D", "#294D0D", "#4D2C0D"];

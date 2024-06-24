@@ -4,6 +4,7 @@ import { FiTag } from 'react-icons/fi';
 import { MdDone, MdOutlineDragIndicator } from 'react-icons/md';
 import { IoMdMore } from 'react-icons/io';
 import WathlistOptionCard from "../card/WathlistOptionCard";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }) => {
   const [showOption, setShowOption] = useState(false);
@@ -83,6 +84,9 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }
     onDrop(e, index);
   };
 
+  const navigate = useNavigate();
+
+  const address = (item[0]._id.$oid);
 
   return (
     <>
@@ -97,14 +101,16 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }
         {draggedItemIndex === index && indicatorPosition === 'top' && (
           <div className="drag-indicator-top"></div>
         )}
-        <div className='div2 d-flex align-items-center justify-content-start gap-5'>
+        <div
+          onClick={() => navigate(`/${address}`)}
+          className='div2 d-flex align-items-center justify-content-start gap-5' >
           <div className='div1 number d-flex align-items-center justify-content-center'><MdOutlineDragIndicator className="hinglight" />{index + 1}</div>
           <div className="d-flex align-items-center justify-content-start gap-2">
             <img loading="lazy" height={"80px"} width={"50px"} src={item[0].moviePoster} alt="Movie Poster" style={{ borderRadius: "5px" }} />
             <div className='d-flex align-items-start justify-content-center flex-column gap-1'>
               <h4 className='mb-0'>{item[0].name}</h4>
-              <p className='mb-0'> {item[0].genre}</p>
-              <p className='mb-0'> {item[0].releaseDate} . 2h 22m</p>
+              <p className='mb-0'> {item[0].genre.join(", ")}</p>
+              <p className='mb-0'>{[new Date(item[0].releaseDate).getFullYear()]}</p>
             </div>
           </div>
         </div>
