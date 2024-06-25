@@ -7,7 +7,7 @@ import { GoArrowRight } from 'react-icons/go';
 import { IoAddCircle, IoAddCircleOutline, IoCheckmarkDone } from 'react-icons/io5';
 import Modal from '../components/card/Modal.jsx';
 import WatchlistCard from '../components/card/WatchlistCard.jsx';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { LuPen } from 'react-icons/lu';
 import { IoMdMore } from 'react-icons/io';
 import WathlistOptionCard from '../components/card/WathlistOptionCard.jsx';
@@ -115,8 +115,7 @@ const YourWatchlist = () => {
 
   const API = import.meta.env.VITE_APP_URI_API;
   // for fetch movies
-  const [titles, setTitles] = useState([]);
-  const [WatchlistDetails, setWatchlistDetails] = useState([]);
+  // const [titles, setTitles] = useState([]);
 
   const getManageCardId = (e) => {
     axios.get(`${API}/manageTitles/${e}`)
@@ -132,7 +131,42 @@ const YourWatchlist = () => {
       .catch(err => console.log(err));
     // mangefunc()
   };
-  const [Manage, setManage] = useState(false);
+
+
+  // this is for save page state in session storeage
+
+  const [Manage, setManage] = useState(() => {
+    const storedbtn = sessionStorage.getItem('Manage');
+    return storedbtn ? JSON.parse(storedbtn) : false;
+  });
+  const [WatchlistDetails, setWatchlistDetails] = useState(() => {
+    const WatchlistDetails = sessionStorage.getItem('cards');
+    return WatchlistDetails ? JSON.parse(WatchlistDetails) : [];
+  });
+
+  const [titles, setTitles] = useState(() => {
+    const titles = sessionStorage.getItem('titles');
+    return titles ? JSON.parse(titles) : [];
+  });
+
+  useEffect(() => {
+    if (titles) {
+      sessionStorage.setItem('titles', JSON.stringify(titles));
+    }
+  }, [titles]);
+  useEffect(() => {
+    if (WatchlistDetails) {
+      sessionStorage.setItem('cards', JSON.stringify(WatchlistDetails));
+    }
+  }, [WatchlistDetails]);
+  useEffect(() => {
+    if (Manage) {
+      sessionStorage.setItem('Manage', JSON.stringify(Manage));
+    }
+  }, [Manage]);
+
+
+
 
 
   //  this all things for draggebale list items

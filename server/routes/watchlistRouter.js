@@ -58,6 +58,26 @@ router.post('/update-watchlist', async (req, res) => {
     }
 });
 
+// for delete wathclist
+router.post('/watchlist-delete', async (req, res) => {
+    const { watchlistId } = req.body;
+    try {
+        let validCardId = watchlistId;
+        if (typeof watchlistId === 'object' && watchlistId) {
+            validCardId = watchlistId;
+        }
+
+        const result = await WatchlistModel.deleteOne(
+            { _id: validCardId },
+        );
+
+        res.json(result);
+    } catch (error) {
+        console.error('Error updating watchlist:', error);
+        res.status(500).json({ error: 'Failed to update watchlist', message: error.message });
+    }
+});
+
 // router.get("/manageTitles", async (req, res) => {
 //     console.log("Request body:", req.body);
 //     const { Id } = req.body;

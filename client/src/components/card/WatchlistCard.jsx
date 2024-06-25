@@ -46,19 +46,19 @@ const WatchlistCard = ({ ManageCardId }) => {
 
     // for options model close outside the Component
     const [ShowOption, setShowOption] = useState(false)
-    const wrapperRef = useRef(null);
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-                // setShowOption(-1);
-            }
+    const wrapperRef = useRef(null)
+    function handleClickOutside(event) {
+        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+            setShowOption(false);
         }
+    }
+    useEffect(() => {
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [wrapperRef]);
+    }, []);
 
 
     // fot fetch wathclists 
@@ -76,22 +76,36 @@ const WatchlistCard = ({ ManageCardId }) => {
 
     useEffect(() => {
         fetchWatchlist();
-    }, []);
+    });
+
+    // for delete watchlists
+
+    const [watchlistId, setWatchlistId] = useState('')
+
+    const getCardId = (event) => {
+        setWatchlistId(event)
+    };
+
+    const DeleteWatchlist = async () => {
+        axios.post(`${API}/watchlist-delete`, { watchlistId }).then(result => {
+            console.log(result)
+        }).catch((err) => {
+            console.error(err);
+        })
+    };
+
 
 
     // for handle navigation on wathliscards length
     const navigate = useNavigate()
-    const handleWatchlist = () => {
-        if (watchlists.length >= 0) {
-            navigate('/yourWatchlist');
-        } else {
-            navigate('/watchlistPage');
-        }
+
+    if (watchlists.length > 0) {
+        navigate('/yourWatchlist');
+    } else {
+        navigate('/watchlistPage');
     }
-    useEffect(() => {
-        handleWatchlist()
-    },[])
-  
+    console.log(watchlists.length);
+
 
     // const colorArray = ["#282829", "#444D0D", "#294D0D", "#4D2C0D"];
     // const getRandomColor = () => colorArray[Math.floor(Math.random() * colorArray.length)];
@@ -111,8 +125,8 @@ const WatchlistCard = ({ ManageCardId }) => {
                     </div>
                     <div className='d-flex align-items-center justify-content-center gap-3'>
                         <button className='mainbtn' onClick={() => ManageCardId(elem._id)}>Manage</button>
-                        <button className="position-relative"><FiMoreHorizontal onClick={() => setShowOption(index === ShowOption ? -1 : index)} style={{ color: "#FFFF", }} />
-                            {ShowOption === index && <WathlistOptionCard icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
+                        <button onClick={() => getCardId(elem._id)} className="position-relative"><FiMoreHorizontal onClick={() => setShowOption(index === ShowOption ? -1 : index)} style={{ color: "#FFFF", }} />
+                            {ShowOption === index && <WathlistOptionCard deletefunc={DeleteWatchlist} icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
                         </button>
                     </div>
                 </div>
