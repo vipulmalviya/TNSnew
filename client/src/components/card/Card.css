@@ -265,13 +265,14 @@
 }
 
 .modal-right h1 {
-    font-size: var(--h3-Heading);
+    font-size: var(--h3-Heading) !important;
     margin-bottom: 0;
     font-size: 32px;
     font-weight: 700;
     line-height: 39.07px;
     letter-spacing: 0.01em;
     text-align: left;
+    color: white !important;
 
 }
 
@@ -332,29 +333,31 @@
     padding: 10px 10%;
 }
 
-.wathlistOptions>ul>li>button {
+.wathlistOptions > ul li button {
     width: 100%;
     height: 100%;
+    background-color: transparent !important;
     color: rgba(179, 179, 179, 1);
     font-size: var(--p3-Paragraph) !important;
     font-weight: 400;
     gap: 10px;
 }
 
+
 .wathlistOptions>ul>li>button>p {
     margin: 0;
     padding: 0;
     height: fit-content;
     margin-bottom: -5px;
-
+    white-space: nowrap;
 }
 
 .wathlistOptions>ul>li:hover {
     background: rgba(54, 54, 57, 1);
 }
 
-.wathlistOptions>ul>li svg {
-    font-size: 1.1rem;
+.wathlistOptions>ul>li button svg {
+    font-size: 3rem !important;
 }
 
 

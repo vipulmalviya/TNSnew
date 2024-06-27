@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "./Card.css"
 import Button from '../buttons/Button'
 import ButtonSec from '../buttons/ButtonSec'
@@ -6,10 +6,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
-const Modal = ({ link1, onclick2, prop }) => {
+const Modal = ({ detail, onclick2, prop, id }) => {
     const API = import.meta.env.VITE_APP_URI_API; // Ensure this points to your backend API
     const navigate = useNavigate();
-    
+
     const [watchlistName, setWatchlistName] = useState('');
     const [watchlistAvatar, setWatchlistAvatar] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png");
 
@@ -20,14 +20,15 @@ const Modal = ({ link1, onclick2, prop }) => {
     const handleWatchlistImgChange = (e) => {
         var reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
-        reader.onload=()=>{
+        reader.onload = () => {
             setWatchlistAvatar(reader.result);
         };
         reader.onerror = error => {
-            console.log("error",error)
+            console.log("error", error)
         }
     };
 
+    // for uploade watchlist function 
     const requesthandler = (e) => {
         e.preventDefault();
         axios.post(`${API}/watchlist-upload`, { watchlistName, watchlistAvatar })
@@ -41,14 +42,30 @@ const Modal = ({ link1, onclick2, prop }) => {
                 console.error('Error saving watchlist:', error);
             });
     };
-    
+
+    // for edite watchlist 
+
+
+    const watchlistEditFunc = (e) => {
+        e.preventDefault();
+        axios.post(`${API}/watchlist-update`, {
+            cardId: id,
+            watchlistName,
+            watchlistAvatar
+        }).then(result => {
+            alert(result.data)
+        }).catch(error => { console.error(error); })
+    }
+
+
+   
 
     return (
-        <section className='modal d-flex align-content-center justify-content-center'>
+        <section  className='modal d-flex align-content-center justify-content-center'>
             <div className='modal_warrper d-flex align-items-center justify-content-between'>
                 <div className='modal-right flex-column d-flex align-items-start justify-content-between'>
-                    <h1>Create a new watchlist</h1>
-                    <form onSubmit={requesthandler}>
+                    <h1>{detail}</h1>
+                    <form>
                         <input
                             className='modal-input'
                             value={watchlistName}
@@ -58,8 +75,9 @@ const Modal = ({ link1, onclick2, prop }) => {
                         />
                     </form>
                     <div className='d-flex align-items-center justify-content-start gap-3'>
-                        <Button onclick={requesthandler}>{prop ? "continue" : "save"}</Button>
-                        <Link onClick={onclick2} className='backbtn' to="">Cancel</Link>
+                        {prop ? <Button onclick={requesthandler}>{"continue"}</Button> :
+                            <button className='mainbtn' onClick={watchlistEditFunc}>{"save"}</button>}
+                        <Link onClick={onclick2} className='backbtn' >Cancel</Link>
                     </div>
                 </div>
                 <div className='modal-left d-flex flex-column align-items-center justify-content-between'>

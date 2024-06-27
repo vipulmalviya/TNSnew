@@ -118,6 +118,9 @@ const WatchlistPage = () => {
     setModalShow(!ModalShow)
   }
 
+  // console.log(first.push(1));
+
+
   return (
     <fregment >
       <section className='headersection d-flex flex-column'>
@@ -138,7 +141,7 @@ const WatchlistPage = () => {
           </div>
         </div>
       </section >
-      {ModalShow && <Modal link1={"/yourWatchlist"} onclick2={modalshow} prop={true} />}
+      {ModalShow && <Modal onclick2={modalshow} prop={true} detail={"create new watchlist"} />}
       <section>
         <div className="container">
           <div className='cardHeaders d-flex'>

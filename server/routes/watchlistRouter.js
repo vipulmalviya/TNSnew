@@ -78,20 +78,24 @@ router.post('/watchlist-delete', async (req, res) => {
     }
 });
 
-// router.get("/manageTitles", async (req, res) => {
-//     console.log("Request body:", req.body);
-//     const { Id } = req.body;
-//     console.log(Id);
-//     try {
-//         const watchlistdata = await WatchlistModel.findById(Id);
-//         if (!watchlistdata) {
-//             return res.status(404).json({ error: 'Watchlist not found' });
-//         }
-//         res.status(200).json(watchlistdata);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// });
+// for watchlist update
+
+router.post("/watchlist-update", async (req, res) => {
+    const { watchlistAvatar, watchlistName, cardId } = req.body;
+
+    try {
+        const result = await WatchlistModel.updateOne({ _id: cardId },
+            { $set: { watchlistAvatar: watchlistAvatar, watchlistName: watchlistName } }
+        )
+        res.json(result);
+
+    } catch (error) {
+        console.error('Error updating watchlist:', error);
+        res.status(500).json({ error: 'Failed to update watchlist', message: error.message });
+    }
+});
+
+// for wathlist titles
 
 router.get("/manageTitles/:id", async (req, res) => {
     const { id } = req.params;
@@ -108,5 +112,37 @@ router.get("/manageTitles/:id", async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// for delete titles
+
+
+router.post("/delete-title", async (req, res) => {
+    const { listId, getId } = req.body;
+
+    try {
+        // Validate listId and getId
+        if (!mongoose.Types.ObjectId.isValid(getId)) {
+            return res.status(400).json({ error: 'Invalid watchlist ID' });
+        }
+        // if (!mongoose.Types.ObjectId.isValid(listId)) {
+        //     return res.status(400).json({ error: 'Invalid title ID' });
+        // }
+
+        // Update the watchlist by pulling the specific title from movieTitles array
+        const updatedWatchlist = await WatchlistModel.updateOne(
+            { _id: getId }, { $pull: { movieTitles: { name: listId } } }
+        );
+
+        if (!updatedWatchlist) {
+            return res.status(404).json({ error: 'Watchlist not found' });
+        }
+
+        res.status(200).json({ message: 'Success', updatedWatchlist });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 module.exports = router;

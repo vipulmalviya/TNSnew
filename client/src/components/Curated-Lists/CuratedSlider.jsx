@@ -75,10 +75,10 @@ const CuratedSlider = ({ title }) => {
                                 </div>
                                 <h3>{elem.content}</h3>
                                 <p>{elem.paragraph}</p>
-                                <Button>
+                                <button className='mainbtn'>
                                     see All Titles
                                     <MdArrowForward />
-                                </Button>
+                                </button>
                             </div>
                         </div>
                     </Link>

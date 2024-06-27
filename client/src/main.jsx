@@ -10,10 +10,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 createRoot(rootElement).render(
-  <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+  // <React.StrictMode>
+  <Router>
+    <App />
     <ToastContainer />
-  </React.StrictMode>
+  </Router>
+  // </React.StrictMode>
 );

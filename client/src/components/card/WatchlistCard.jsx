@@ -6,6 +6,7 @@ import WathlistOptionCard from './WathlistOptionCard'
 import { IoMdMore } from 'react-icons/io'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import axios from 'axios'
+import Modal from './Modal'
 
 
 const WatchlistCard = ({ ManageCardId }) => {
@@ -42,6 +43,7 @@ const WatchlistCard = ({ ManageCardId }) => {
     //     }
     // ]
 
+    const navigate = useNavigate()
     const API = import.meta.env.VITE_APP_URI_API;
 
     // for options model close outside the Component
@@ -52,8 +54,8 @@ const WatchlistCard = ({ ManageCardId }) => {
             setShowOption(false);
         }
     }
-    useEffect(() => {
 
+    useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
@@ -76,7 +78,7 @@ const WatchlistCard = ({ ManageCardId }) => {
 
     useEffect(() => {
         fetchWatchlist();
-    });
+    }, []);
 
     // for delete watchlists
 
@@ -95,22 +97,26 @@ const WatchlistCard = ({ ManageCardId }) => {
     };
 
 
+    // console.log(first.pop(1));
+
 
     // for handle navigation on wathliscards length
-    const navigate = useNavigate()
-
     if (watchlists.length > 0) {
         navigate('/yourWatchlist');
     } else {
         navigate('/watchlistPage');
     }
-    console.log(watchlists.length);
+
 
 
     // const colorArray = ["#282829", "#444D0D", "#294D0D", "#4D2C0D"];
     // const getRandomColor = () => colorArray[Math.floor(Math.random() * colorArray.length)];
 
+    const [ModalShow1, setModalShow1] = useState(false)
 
+    function modalshow1() {
+        setModalShow1(!ModalShow1)
+    }
 
     return (
         <>
@@ -126,11 +132,12 @@ const WatchlistCard = ({ ManageCardId }) => {
                     <div className='d-flex align-items-center justify-content-center gap-3'>
                         <button className='mainbtn' onClick={() => ManageCardId(elem._id)}>Manage</button>
                         <button onClick={() => getCardId(elem._id)} className="position-relative"><FiMoreHorizontal onClick={() => setShowOption(index === ShowOption ? -1 : index)} style={{ color: "#FFFF", }} />
-                            {ShowOption === index && <WathlistOptionCard deletefunc={DeleteWatchlist} icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
+                            {ShowOption === index && <WathlistOptionCard deletefunc={DeleteWatchlist} updateFunc={modalshow1} icon1={"images/pen.svg"} icon2={"images/deletegray.svg"} prop1={"Rename"} prop2={"Delete List"} />}
                         </button>
                     </div>
                 </div>
             )}
+            {ModalShow1 && <Modal id={watchlistId} onclick2={modalshow1} detail={"Edite details"} />}
         </>
     )
 }

@@ -1,10 +1,7 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import "./Card.css"
-import Button from '../buttons/Button'
-import { Navigate, useNavigate } from 'react-router-dom'
-// import WatchlistModel from './WatchlistModel'
+import {  useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { IoMdMore } from "react-icons/io";
 
 
 const WatchlistModel = lazy(() => import("./WatchlistModel"))

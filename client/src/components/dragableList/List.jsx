@@ -5,10 +5,11 @@ import { MdDone, MdOutlineDragIndicator } from 'react-icons/md';
 import { IoMdMore } from 'react-icons/io';
 import WathlistOptionCard from "../card/WathlistOptionCard";
 import { Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import axios from "axios";
 
-const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }) => {
+const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex, passDeleteFunc }) => {
   const [showOption, setShowOption] = useState(false);
-  const [text, setText] = useState('Masterpiece');
   const [isEditing, setIsEditing] = useState(false);
   const [indicatorPosition, setIndicatorPosition] = useState();
 
@@ -18,11 +19,16 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }
   useEffect(() => {
     if (isEditing) {
       inputRef.current.focus();
+      wrapperRef.current.focus();
+      setShowOption(false)
     }
 
     const handleClickOutside = (event) => {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
         saveText();
+      }
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowOption(false)
       }
     };
 
@@ -37,8 +43,22 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }
     const words = inputValue.split("");
     if (words.length <= 10) {
       setText(inputValue);
+    } else {
+      toast("you give tag under 10 Alphabets only!!!");
     }
   };
+
+  const [text, setText] = useState(() => {
+    const result = localStorage.getItem('text');
+    return result ? JSON.parse(result) : "Masterpice";
+  });
+
+  useEffect(() => {
+    if (text) {
+      localStorage.setItem('text', JSON.stringify(text));
+    }
+  }, [text]);
+
 
   const handleBlur = () => {
     saveText();
@@ -91,6 +111,7 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }
   return (
     <>
       <div
+        onClick={() => navigate(`/${address}`)}
         ref={wrapperRef}
         className='listItem position-relative container d-flex align-items-center justify-content-center p-2'
         draggable="true"
@@ -102,11 +123,10 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }
           <div className="drag-indicator-top"></div>
         )}
         <div
-          onClick={() => navigate(`/${address}`)}
           className='div2 d-flex align-items-center justify-content-start gap-5' >
           <div className='div1 number d-flex align-items-center justify-content-center'><MdOutlineDragIndicator className="hinglight" />{index + 1}</div>
           <div className="d-flex align-items-center justify-content-start gap-2">
-            <img loading="lazy" height={"80px"} width={"50px"} src={item[0].moviePoster} alt="Movie Poster" style={{ borderRadius: "5px" }} />
+            <img className="moviePoster" loading="lazy" height={"80px"} width={"50px"} src={item[0].moviePoster} alt="Movie Poster" style={{ borderRadius: "5px" }} />
             <div className='d-flex align-items-start justify-content-center flex-column gap-1'>
               <h4 className='mb-0'>{item[0].name}</h4>
               <p className='mb-0'> {item[0].genre.join(", ")}</p>
@@ -131,10 +151,10 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex }
         ) : (
           <div className="div5 d-flex align-items-center justify-content-center gap-2 hinglight" onClick={handleDoubleClick}><FiTag /> {text}</div>
         )}
-        <span className='position-relative div6 d-flex align-items-center justify-content-center gap-4'>
+        <span className='position-relative div6 d-flex align-items-center justify-content-center gap-3'>
           <button><MdDone style={{ color: "#71E839" }} /></button>
-          <button><img loading="lazy" src="images/delete.svg" alt="" /></button>
-          <button className="position-relative"><IoMdMore onClick={() => setShowOption(index === showOption ? -1 : index)} style={{ color: "var(--decorate-color)" }} />
+          <button onClick={() => { passDeleteFunc(item[0].name) }}><img loading="lazy" src="images/delete.svg" alt="icone" /></button>
+          <button onClick={() => setShowOption(index === showOption ? -1 : index)} className="position-relative"><IoMdMore style={{ color: "var(--decorate-color)" }} />
             {showOption === index && <WathlistOptionCard icon1={"images/move.svg"} icon2={"images/pen-line (1).svg"} prop1={"Move to"} prop2={"Write a Review"} />}
           </button>
         </span>

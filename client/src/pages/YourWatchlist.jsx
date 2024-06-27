@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CuratedSlider from '../components/Curated-Lists/CuratedSlider.jsx';
 import Card from '../components/card/Card.jsx';
 import Carousel from "react-multi-carousel";
@@ -117,8 +117,10 @@ const YourWatchlist = () => {
   // for fetch movies
   // const [titles, setTitles] = useState([]);
 
-  const getManageCardId = (e) => {
-    axios.get(`${API}/manageTitles/${e}`)
+  const [getId, setGetId] = useState("")
+  const getManageCardId = async (e) => {
+    setGetId(e)
+    await axios.get(`${API}/manageTitles/${e}`)
       .then(result => {
         setTitles(result.data.movieTitles);
         setWatchlistDetails(result.data);
@@ -131,6 +133,22 @@ const YourWatchlist = () => {
       .catch(err => console.log(err));
     // mangefunc()
   };
+
+
+  // for delete list items
+
+  const deletefunc = async (e) => {
+    console.log(getId);
+    await axios.post(`${API}/delete-title`, { 
+      listId:e,
+      getId
+     }).then(result => {
+
+      alert(result)
+
+    }).catch(err => console.log(err));
+
+  }
 
 
   // this is for save page state in session storeage
@@ -153,7 +171,7 @@ const YourWatchlist = () => {
     if (titles) {
       sessionStorage.setItem('titles', JSON.stringify(titles));
     }
-  }, [titles]);
+  }, [WatchlistDetails]);
   useEffect(() => {
     if (WatchlistDetails) {
       sessionStorage.setItem('cards', JSON.stringify(WatchlistDetails));
@@ -163,8 +181,7 @@ const YourWatchlist = () => {
     if (Manage) {
       sessionStorage.setItem('Manage', JSON.stringify(Manage));
     }
-  }, [Manage]);
-
+  }, [WatchlistDetails]);
 
 
 
@@ -195,6 +212,7 @@ const YourWatchlist = () => {
   };
 
   const [ShowOption, setShowOption] = useState(false)
+  const [ModalShow1, setModalShow1] = useState(false)
   const [ModalShow, setModalShow] = useState(false)
   const [isCardsShow, setIsCardsShow] = useState(true);
 
@@ -205,16 +223,34 @@ const YourWatchlist = () => {
   function modalshow() {
     setModalShow(!ModalShow)
   }
+  const [cadrdId, setCardid] = useState('')
+  function modalshow1(e) {
+    setCardid(e._id)
+    setModalShow1(!ModalShow1)
+  }
+
+  const wrapperRef = useRef(null)
+  function handleClickOutside(event) {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setShowOption(false);
+    }
+  }
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <fregment >
       {Manage && <>
-        <section className='watchlistInfoSection d-flex align-items-center justify-content-center '>
+        <section ref={wrapperRef} className='watchlistInfoSection d-flex align-items-center justify-content-center '>
           <div className="container d-flex align-items-center justify-content-start">
             <div className='d-flex align-items-center justify-content-between w-100'>
               <div className="watchlistsInfo d-flex align-items-center justify-content-start">
                 <div className="watchlistAvatar mx-3">
-                  <img height={"100%"} width={"100%"} src={WatchlistDetails.watchlistAvatar} alt={WatchlistDetails.watchlistName} />
+                  <img height={"100%"} width={"100%"} src={WatchlistDetails?.watchlistAvatar} alt={WatchlistDetails?.watchlistName} />
                   <button className='AvatarBtn position-absolute d-flex flex-column align-items-center justify-content-center'>
                     <LuPen />
                     Choose Avatar
@@ -222,8 +258,8 @@ const YourWatchlist = () => {
                 </div>
                 <div className='pagehadding'>
                   <p className='mb-0'>Watchlist</p>
-                  <h2 onClick={modalshow} style={{ cursor: "pointer", }}>{WatchlistDetails.watchlistName}</h2>
-                  {ModalShow && <Modal prop={ModalShow} />}
+                  <h2 onClick={() => modalshow1(WatchlistDetails)} style={{ cursor: "pointer", }}>{WatchlistDetails.watchlistName}</h2>
+                  {ModalShow1 && <Modal id={cadrdId} onclick2={modalshow1} detail={"Edite details"} />}
                   <p className=' d-flex align-items-center justify-content-start gap-2'><span>Rahul Malviya</span> . <span>8 Movies</span> . <span>2 TV Series</span></p>
                 </div>
               </div>
@@ -257,6 +293,7 @@ const YourWatchlist = () => {
           <div>
             {titles.map((item, index) => (
               <List
+                passDeleteFunc={deletefunc}
                 item={item}
                 index={index}
                 key={index}
@@ -279,7 +316,7 @@ const YourWatchlist = () => {
           </div>
         </div>
       </section>
-      {ModalShow && <Modal onclick2={modalshow} />}
+      {ModalShow && <Modal onclick2={modalshow} detail={"Create new watchlist"} />}
       <section>
         <div className="container">
           <div className='cardHeaders d-flex'>

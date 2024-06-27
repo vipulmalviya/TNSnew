@@ -528,26 +528,6 @@ const MovieSlider = ({ title, type }) => {
   ]
 }
     ];
-    // const { data, loading } = useFetch(`/discover/${type}`)
-
-    // const skItem = () => {
-    //     return (
-    //         <div className="card">
-    //             <div className='posterBlock skeleton' />
-    //             <div className='textBlock skeleton'>
-    //                 <span className='d-flex'>
-    //                     <h4></h4>
-    //                     <img height={"30px"} src="" alt="" />
-    //                 </span>
-    //                 <span className='d-flex'>
-    //                     <p></p>
-    //                     <span className="number"></span>
-    //                 </span>
-    //                 <button className='skeleton'><Link to=""></Link></button>
-    //             </div>
-    //         </div>
-    //     )
-    // }
 
     const responsive = {
         superlargedesktop: {
@@ -576,7 +556,7 @@ const MovieSlider = ({ title, type }) => {
                 </div>
                 {<Carousel className="MovieCards flex"
                     responsive={responsive}
-                    swipeable
+                    swipeable={true}
                     removeArrowOnDeviceType={["tablet", "mobile"]}>
                     {Lcard?.map((elem, index) =>
                         <Card value={index} key={index} Poster={elem.moviePoster} Title={elem.name} catagory={elem.genre} watch={elem.popularity} year={elem.releaseDate} episode={elem.episode} btn={true} mediaId={elem._id.$oid} elem={elem} />

@@ -571,8 +571,6 @@ const SingleMoviePage = () => {
     fetchMovieData();
   }, [id]);
 
-  console.log(Movies);
-
   const [ChangeBtn, setChangeBtn] = useState(false)
 
   function btnchange() {
