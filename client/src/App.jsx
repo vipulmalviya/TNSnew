@@ -37,12 +37,12 @@ function App() {
         <Route exact path="/experiencePage" element={<ExperiencePage />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/home" element={<Home />} />
-        <Route exact path="/watchlistPage" element={<WatchlistPage />} />
+        {/* <Route exact path="/watchlistPage" element={<WatchlistPage />} /> */}
         <Route exact path="/yourWatchlist" element={<YourWatchlist />} />
         <Route exact path="/:id" element={<SingleMoviePage />} />
-        <Route path="/search" element={<SearchResult />} />
-        <Route path="/curatedPage" element={<CuratedPage />} />
-        <Route path="/categoryPage" element={<CategoryPage />} />
+        <Route exact path="/search" element={<SearchResult />} />
+        <Route exact path="/curatedPage" element={<CuratedPage />} />
+        <Route exact path="/categoryPage" element={<CategoryPage />} />
       </Routes>
       {showFooter && <Footer />}
     </>

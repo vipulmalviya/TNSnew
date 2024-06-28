@@ -249,8 +249,8 @@ const ExpreriencePage = () => {
                         <p className='mb-0'>Select a few movies or TV series you've enjoyed recently <br />  to help us understand your taste.</p>
                     </div>
                     <div className='ECard gap-2 d-grid flex-wrap align-content-center justify-content-center'>
-                        {Lcard.map((elem) => {
-                            return <ExperienceCard imageUrl={elem.poster_path} title={elem.original_title} />
+                        {Lcard.map((elem,index) => {
+                            return <ExperienceCard key={index} imageUrl={elem.poster_path} title={elem.original_title} />
                         })}
                     </div>
                     <div className=' d-flex align-items-center justify-content-start gap-3'>

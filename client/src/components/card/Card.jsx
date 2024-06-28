@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import "./Card.css"
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -28,6 +28,7 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode,
             setShowCards(false)
         }).catch(err => console.log(err));
     }
+
 
     // for watchlist close when we click on outside the component
     const cardRef = useRef(null);
@@ -77,22 +78,22 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode,
                         </button>
                     }
                     </div>
-                    {showCards && (<Suspense fallback={<div>lodaing.....</div>}> <WatchlistModel passFunction={PushMovieFunc} /></Suspense>)}
-            </div>
-
-            <div className='movieDetails d-flex justify-content-between flex-column'>
-                <div className=' d-flex justify-content-between'>
-                    <span className='moviespan position-relative gap-1 h-75  d-flex justify-content-start align-items-start flex-column '>
-                        <h4 data-toggle="tooltip" title={Title}>{Title}</h4>
-                        {btn ? <p>{fullyear}</p> : <p>{episode}</p>}
-                    </span>
-                    <span className='logospan position-relative gap-1 h-75  d-flex flex-column justify-content-start align-items-center'>
-                        <img loading='lazy' height={"20px"} src="images/latestlogo.svg" alt="tnslogo" />
-                        <span className="number">{watch}</span>
-                    </span>
+                    {showCards && (<Suspense fallback={<div>lodaing.....</div>}> <WatchlistModel data={watchlists} passFunction={PushMovieFunc} /></Suspense>)}
                 </div>
-            </div>
-        </div >
+
+                <div className='movieDetails d-flex justify-content-between flex-column'>
+                    <div className=' d-flex justify-content-between'>
+                        <span className='moviespan position-relative gap-1 h-75  d-flex justify-content-start align-items-start flex-column '>
+                            <h4 data-toggle="tooltip" title={Title}>{Title}</h4>
+                            {btn ? <p>{fullyear}</p> : <p>{episode}</p>}
+                        </span>
+                        <span className='logospan position-relative gap-1 h-75  d-flex flex-column justify-content-start align-items-center'>
+                            <img loading='lazy' height={"20px"} src="images/latestlogo.svg" alt="tnslogo" />
+                            <span className="number">{watch}</span>
+                        </span>
+                    </div>
+                </div>
+            </div >
         </>
     )
 }

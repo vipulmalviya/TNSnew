@@ -231,7 +231,7 @@ const Home = () => {
           <div className='pcontainer d-flex ' style={{ backgroundImage: `url("images/pcontainer.svg")` }}>
             <div className=' d-flex flex-column gap-3 align-items-start justify-content-center' >
               <h2>Add Titles to Your Watchlist Which Better Suits Your Mood & Taste</h2>
-              <Button linkprop={"/watchlistPage"}> <img loading='lazy' height={"15px"} width={"15px"} src="images/darkbookmark.svg" alt="icone" /> My Watchlist</Button>
+              <Button linkprop={"/yourWatchlist"}> <img loading='lazy' height={"15px"} width={"15px"} src="images/darkbookmark.svg" alt="icone" /> My Watchlist</Button>
             </div>
           </div>
         </div>

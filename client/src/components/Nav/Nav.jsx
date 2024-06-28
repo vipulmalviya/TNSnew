@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Nav.css"
 import { Link, useNavigate } from 'react-router-dom'
-import { MdArrowForward} from 'react-icons/md'
+import { MdArrowForward } from 'react-icons/md'
 import { IoMdClose } from 'react-icons/io'
 import { CiSearch } from 'react-icons/ci'
 import "react-multi-carousel/lib/styles.css";
 import axios from 'axios'
+import Button from '../buttons/Button'
 
 
 const Nav = ({ setQuery, query }) => {
@@ -16,28 +17,26 @@ const Nav = ({ setQuery, query }) => {
     }
     const navigate = useNavigate()
     const handleNavigate = (event) => {
-        navigate('/search')
+        console.log(event);
+        navigate(event)
     };
 
 
 
+    const API = import.meta.env.VITE_APP_URI_API;
+    const [userdata, setUserdata] = useState({});
 
-    // const [userdata, setUserdata] = useState({});
-    // console.log("response", userdata);
-
-    // const getUser = async () => {
-    //     try {
-    //         const response = await axios.get("https://thenextstream.in/login/success", { withCredentials: true });
-    //         setUserdata(response.data.user)
-    //     } catch (error) {
-    //         console.log("error", error)
-    //     }
-    // }
-
-
-    //     useEffect(()=>{
-    //         getUser()
-    //     },[])
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const response = await axios.get(`${API}/login/success`, { withCredentials: true });
+                setUserdata(response.data.user)
+            } catch (error) {
+                console.log("error", error)
+            }
+        }
+        getUser()
+    }, [])
 
 
 
@@ -48,30 +47,30 @@ const Nav = ({ setQuery, query }) => {
                 <div className="container">
                     <nav className='d-flex align-items-center gap-3'>
                         <div className="left d-flex">
-                            <Link to="/home" className="logo"><img loading="lazy" height={"100%"} weight={"100%"} src="images/latestlogo.svg" alt="" /></Link>
+                            <Link to="/home" className="logo"><img loading="lazy" height={"100%"} weight={"100%"} src="images/latestlogo.svg" alt="logo" /></Link>
                         </div>
                         <div className="navM gap-4 align-items-center justify-content-end">
-                            <form action="" className='d-flex align-items-center '>
+                            <form action='' className='d-flex align-items-center '>
                                 <input
-                                    onClick={handleNavigate}
+                                    // onClick={handleNavigate}
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                     type="text"
                                     placeholder='Search for movies, tv series, curated lists... ' />
                                 <CiSearch />
                             </form>
-                            <div className='watchlistDiv d-flex gap-2 align-items-center'>
+                            <Link to="/Yourwatchlist"  className='watchlistDiv d-flex gap-2 align-items-center'>
                                 <img loading="lazy" height={"100%"} width={"100%"} src="images/bookmark.svg" alt="watchlist icone" />
-                                <p>My Watchlist</p>
-                            </div>
-                            {/* {
+                                <p className='mt-1'>My Watchlist</p>
+                            </Link>
+                            {
                                 Object?.keys(userdata)?.length > 0 ? (
                                     <img loading="lazy" data-toggle="tooltip" title="My Profile" height={"35px"} width={"35px"} src="images/Ellipse 33.svg" alt="" />
                                 ) : <Button linkprop={"/login"}>Log In</Button>
 
-                            } */}
+                            }
                             <div className="hamburgur" onClick={NavFunc} >
-                                <img loading="lazy" height={"30px"} width={"30px"} src="images/menu-alt-1.svg" alt="" />
+                                <img loading="lazy" height={"30px"} width={"30px"} src="images/menu-alt-1.svg" alt="icone" />
                             </div>
                         </div>
                         <div className={`p-2 side-menu d-flex align-items-center justify-content-start flex-column ${Nav ? "open" : ""}`}>

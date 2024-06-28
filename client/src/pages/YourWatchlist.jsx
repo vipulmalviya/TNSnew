@@ -14,6 +14,7 @@ import WathlistOptionCard from '../components/card/WathlistOptionCard.jsx';
 import { FiServer, FiTag } from 'react-icons/fi';
 import List from '../components/dragableList/List.jsx';
 import axios from 'axios';
+import { FaArrowLeftLong } from 'react-icons/fa6';
 
 
 
@@ -114,9 +115,30 @@ const YourWatchlist = () => {
 
 
   const API = import.meta.env.VITE_APP_URI_API;
+
+  // for get watchlist
+  const [watchlists, setWatchlists] = useState([]);
+  const [WatchlistDetails, setWatchlistDetails] = useState([]);
+  const [titles, setTitles] = useState([]);
+  const [Manage, setManage] = useState("");
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        const url = `${API}/watchlist-get`;
+        const response = await axios.get(url);
+        setWatchlists(response.data);
+      } catch (error) {
+        console.error('Error fetching watchlist data:', error);
+      }
+    };
+    fetchWatchlist();
+  }, []);
+
+
+
   // for fetch movies
   // const [titles, setTitles] = useState([]);
-
   const [getId, setGetId] = useState("")
   const getManageCardId = async (e) => {
     setGetId(e)
@@ -139,52 +161,49 @@ const YourWatchlist = () => {
 
   const deletefunc = async (e) => {
     console.log(getId);
-    await axios.post(`${API}/delete-title`, { 
-      listId:e,
+    await axios.post(`${API}/delete-title`, {
+      listId: e,
       getId
-     }).then(result => {
+    }).then(result => {
 
       alert(result)
 
     }).catch(err => console.log(err));
-
   }
+
 
 
   // this is for save page state in session storeage
 
-  const [Manage, setManage] = useState(() => {
-    const storedbtn = sessionStorage.getItem('Manage');
-    return storedbtn ? JSON.parse(storedbtn) : false;
-  });
-  const [WatchlistDetails, setWatchlistDetails] = useState(() => {
-    const WatchlistDetails = sessionStorage.getItem('cards');
-    return WatchlistDetails ? JSON.parse(WatchlistDetails) : [];
-  });
+  // const [Manage, setManage] = useState(() => {
+  //   const storedbtn = sessionStorage.getItem('Manage');
+  //   return storedbtn ? JSON.parse(storedbtn) : false;
+  // });
+  // const [WatchlistDetails, setWatchlistDetails] = useState(() => {
+  //   const WatchlistDetails = sessionStorage.getItem('cards');
+  //   return WatchlistDetails ? JSON.parse(WatchlistDetails) : [];
+  // });
 
-  const [titles, setTitles] = useState(() => {
-    const titles = sessionStorage.getItem('titles');
-    return titles ? JSON.parse(titles) : [];
-  });
+  // const [titles, setTitles] = useState(() => {
+  //   const titles = sessionStorage.getItem('titles');
+  //   return titles ? JSON.parse(titles) : [];
+  // });
 
-  useEffect(() => {
-    if (titles) {
-      sessionStorage.setItem('titles', JSON.stringify(titles));
-    }
-  }, [WatchlistDetails]);
-  useEffect(() => {
-    if (WatchlistDetails) {
-      sessionStorage.setItem('cards', JSON.stringify(WatchlistDetails));
-    }
-  }, [WatchlistDetails]);
-  useEffect(() => {
-    if (Manage) {
-      sessionStorage.setItem('Manage', JSON.stringify(Manage));
-    }
-  }, [WatchlistDetails]);
-
-
-
+  // useEffect(() => {
+  //   if (titles) {
+  //     sessionStorage.setItem('titles', JSON.stringify(titles));
+  //   }
+  // }, [WatchlistDetails]);
+  // useEffect(() => {
+  //   if (WatchlistDetails) {
+  //     sessionStorage.setItem('cards', JSON.stringify(WatchlistDetails));
+  //   }
+  // }, [WatchlistDetails]);
+  // useEffect(() => {
+  //   if (Manage) {
+  //     sessionStorage.setItem('Manage', JSON.stringify(Manage));
+  //   }
+  // }, [WatchlistDetails]);
 
   //  this all things for draggebale list items
 
@@ -230,17 +249,20 @@ const YourWatchlist = () => {
   }
 
   const wrapperRef = useRef(null)
-  function handleClickOutside(event) {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-      setShowOption(false);
-    }
-  }
   useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setShowOption(false);
+      }
+    }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+
+  const result = watchlists.length > 0;
 
   return (
     <fregment >
@@ -305,18 +327,35 @@ const YourWatchlist = () => {
             ))}
           </div>
         </section> </>}
-      <section>
+      {result ? <section>
         <div className="container">
           <div className='header d-flex align-items-center'>
             <h2>Watchlist</h2>
             <p onClick={modalshow} className='watchlistbtn mb-0'><IoAddCircleOutline />Create New Watchlist</p>
           </div>
           <div className='cardContaienr d-grid'>
-            <WatchlistCard ManageCardId={getManageCardId} />
+            <WatchlistCard ManageCardId={getManageCardId} watchlist={watchlists} />
           </div>
         </div>
-      </section>
-      {ModalShow && <Modal onclick2={modalshow} detail={"Create new watchlist"} />}
+      </section> : <section className='headersection d-flex flex-column'>
+        <div onClick={modalshow} className="container d-flex flex-column align-items-start justify-content-center" >
+          <div className='d-flex align-items-center justify-content-center gap-3'>
+            <button className='backButton'>
+              <FaArrowLeftLong style={{ color: "#BACC4A", fontSize: "1.2rem", }} />
+            </button>
+            <h1>My Watchlist</h1>
+          </div>
+          <div className="myWatchlistDiv d-flex flex-column align-items-center justify-content-center gap-2">
+            <IoAddCircle />
+            <p>Create your First Watchlist</p>
+          </div>
+          <div className='pagehadding'>
+            <p className='d-flex align-items-cetner gap-2'><IoCheckmarkDone /> Creating watchlists for yourself can help track your favourite movies or shows easily and solves much fuse about what to watch next?</p>
+            <p className='d-flex align-items-cetner gap-2'><IoCheckmarkDone /> You can simply add great movies or shows from our recommendations based titles or use TNS score to decide what to watch or what not to.</p>
+          </div>
+        </div>
+      </section >}
+      {ModalShow && <Modal onclick2={modalshow} prop={true} detail={"Create new watchlist"} />}
       <section>
         <div className="container">
           <div className='cardHeaders d-flex'>

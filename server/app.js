@@ -73,6 +73,7 @@ passport.use(
         if (!user) {
           user = new userModal({
             googleId: profile.id,
+            userName: profile.displayName,
             email: profile.emails[0].value
           });
           await user.save();

@@ -3,23 +3,22 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { IoAddOutline } from 'react-icons/io5';
 
-const WatchlistModel = ({ passFunction }) => {
+const WatchlistModel = ({ passFunction  }) => {
 
 
     const [watchlists, setWatchlists] = useState([]);
     const API = import.meta.env.VITE_APP_URI_API;
 
-    const fetchWatchlist = async () => {
-        try {
-            const url = `${API}/watchlist-get`;
-            const response = await axios.get(url);
-            setWatchlists(response.data);
-        } catch (error) {
-            console.error('Error fetching watchlist data:', error);
-        }
-    };
-
     useEffect(() => {
+        const fetchWatchlist = async () => {
+            try {
+                const url = `${API}/watchlist-get`;
+                const response = await axios.get(url);
+                setWatchlists(response.data);
+            } catch (error) {
+                console.error('Error fetching watchlist data:', error);
+            }
+        };
         fetchWatchlist();
     }, []);
 

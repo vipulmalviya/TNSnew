@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { MdArrowForward } from 'react-icons/md'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -6,6 +6,10 @@ import Cards from '../components/card/Card';
 import { ImForward, ImForward2 } from 'react-icons/im';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import Tagebutton from '../components/buttons/Tagebutton';
+import { MovieFetch } from '../utils/MovieFetch';
+
+
+
 const CategoryPage = () => {
     const array = [
         {
@@ -106,18 +110,35 @@ const CategoryPage = () => {
         }
     ]
 
-    const [type, setType] = useState("movie")
+    const genres = ["Action", "Adventure", "Anime", "Awards", "Comedy", "Cinematic", "Crime", "Documentary", "Dystopian", "Family", "Fantasy", "Gangsters", "Historical", "Crime", "Documentary", "Dystopian", "Family", "Fantasy", "Gangsters", "Horror", "Musical", "Mystery", "Psychological", "Romance"]
 
+    const [genre, setGenre] = useState("crime")
+    const [type, setType] = useState("movie")
+    const [selectedGenres, setSelectedGenres] = useState([]);
+    const [Movies, setMovies] = useState([]);
+    useEffect(() => {
+        const fetchMovies = async () => {
+            try {
+                const result = await MovieFetch(selectedGenres);
+                setMovies(result);
+            } catch (error) {
+                console.error('Error fetching movies:', error);
+                setError(error);
+            }
+        };
+
+        fetchMovies();
+    }, [selectedGenres]);
+
+
+    // console.log(Movies,selectedGenres);
     function categoryFunc(params) {
         setType(params.target.innerText)
     }
-    const [genre, setGenre] = useState("Family")
 
     function category(params) {
         setGenre(params.target.innerText)
     }
-
-    const [selectedGenres, setSelectedGenres] = useState([]);
 
     const handleGenreSelect = (genre) => {
         setSelectedGenres((prevSelected) => {
@@ -144,7 +165,6 @@ const CategoryPage = () => {
             items: 2.5,
         },
         mobile: {
-            // margin:"200px",
             breakpoint: { max: 464, min: 0 },
             items: 1,
         }
@@ -165,23 +185,23 @@ const CategoryPage = () => {
                     </div>
                     <div className="dropdown">
                         <button className=" Active dropdown-toggle d-flex align-items-center justify-content-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <h6>{genre}</h6>
+                            <h6>Top</h6>
                         </button>
-                        <ul className="dropdown-menu" >
+                        {/* <ul className="dropdown-menu" >
                             <li><button onClick={category} className="dropdown-item" type="button"><MdArrowForward />Crime</button></li>
                             <li><button onClick={category} className="dropdown-item" type="button"><MdArrowForward />Documentary</button></li>
                             <li><button onClick={category} className="dropdown-item" type="button"><MdArrowForward />Dystopian</button></li>
-                        </ul>
+                        </ul> */}
                     </div>
                     <Carousel
                         removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
                         responsive={responsive}
                         className='innerContianer d-flex align-items-center'>
-                        {array.map((elem, index) => (
+                        {genres.map((elem, index) => (
                             <Tagebutton
                                 key={index}
-                                tag={elem.value}
-                                isSelected={selectedGenres.includes(elem.value)}
+                                tag={elem}
+                                isSelected={selectedGenres.includes(elem)}
                                 onSelect={handleGenreSelect}
                             />
                         ))}
@@ -191,12 +211,12 @@ const CategoryPage = () => {
             <section className='pt-5 pb-5'>
                 <div className="container">
                     <div className="breadcrumb">
-                        <h3>Showing results for <span>{"Hidden Gems"} / {"Tv Series"}</span></h3>
+                        <h3>Showing results for <span>{"Hidden Gems"} / {type}</span></h3>
                         <p className=''>Search only for <span>{"Hidden Gems"}</span></p>
                     </div>
                     <div className="cardsitems">
-                        {array.map((elem) => {
-                            return <Cards Poster={elem.Poster} btn={true} Title={elem.title} watch={92.9} year={elem.Release_Date} />
+                        {Movies.map((elem, index) => {
+                            return <Cards key={index} Poster={elem.moviePoster} Title={elem.name} catagory={elem.genre} watch={elem.popularity} year={elem.releaseDate} episode={elem.episode} btn={true} mediaId={elem._id.$oid} />
                         })}
                     </div>
                 </div>

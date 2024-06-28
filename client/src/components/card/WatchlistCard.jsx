@@ -9,7 +9,7 @@ import axios from 'axios'
 import Modal from './Modal'
 
 
-const WatchlistCard = ({ ManageCardId }) => {
+const WatchlistCard = ({ ManageCardId, watchlist }) => {
 
     // const cardsArray = [
     //     {
@@ -64,21 +64,21 @@ const WatchlistCard = ({ ManageCardId }) => {
 
 
     // fot fetch wathclists 
-    const [watchlists, setWatchlists] = useState([]);
+    // const [watchlists, setWatchlists] = useState([]);
 
-    const fetchWatchlist = async () => {
-        try {
-            const url = `${API}/watchlist-get`;
-            const response = await axios.get(url);
-            setWatchlists(response.data);
-        } catch (error) {
-            console.error('Error fetching watchlist data:', error);
-        }
-    };
+    // const fetchWatchlist = async () => {
+    //     try {
+    //         const url = `${API}/watchlist-get`;
+    //         const response = await axios.get(url);
+    //         setWatchlists(response.data);
+    //     } catch (error) {
+    //         console.error('Error fetching watchlist data:', error);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchWatchlist();
-    }, []);
+    // useEffect(() => {
+    //     fetchWatchlist();
+    // }, []);
 
     // for delete watchlists
 
@@ -95,17 +95,18 @@ const WatchlistCard = ({ ManageCardId }) => {
             console.error(err);
         })
     };
+    // if (watchlists.length > 0) {
+    //     navigate('/yourWatchlist');
+    // } else {
+    //     navigate('/watchlistPage');
+    // }
 
 
     // console.log(first.pop(1));
 
 
     // for handle navigation on wathliscards length
-    if (watchlists.length > 0) {
-        navigate('/yourWatchlist');
-    } else {
-        navigate('/watchlistPage');
-    }
+
 
 
 
@@ -120,7 +121,7 @@ const WatchlistCard = ({ ManageCardId }) => {
 
     return (
         <>
-            {watchlists.map((elem, index) =>
+            {watchlist.map((elem, index) =>
                 <div ref={wrapperRef} key={index} className='Card-wrapper d-flex flex-column align-items-start justify-content-center gap-3' >
                     <div className="watchlistAvatar">
                         <img loading='lazy' height={"60px"} width={"60px"} src={elem.watchlistAvatar} alt="Watchlist Avatar" />
