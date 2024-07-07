@@ -25,7 +25,7 @@ const Nav = ({ setQuery, query }) => {
 
     const API = import.meta.env.VITE_APP_URI_API;
     const [userdata, setUserdata] = useState({});
-
+    console.log(userdata);
     useEffect(() => {
         const getUser = async () => {
             try {
@@ -59,16 +59,16 @@ const Nav = ({ setQuery, query }) => {
                                     placeholder='Search for movies, tv series, curated lists... ' />
                                 <CiSearch />
                             </form>
-                            <Link to="/Yourwatchlist"  className='watchlistDiv d-flex gap-2 align-items-center'>
+                            <Link to="/Yourwatchlist" className='watchlistDiv d-flex gap-2 align-items-center'>
                                 <img loading="lazy" height={"100%"} width={"100%"} src="images/bookmark.svg" alt="watchlist icone" />
                                 <p className='mt-1'>My Watchlist</p>
                             </Link>
                             {
                                 Object?.keys(userdata)?.length > 0 ? (
-                                    <img loading="lazy" data-toggle="tooltip" title="My Profile" height={"35px"} width={"35px"} src="images/Ellipse 33.svg" alt="" />
+                                    <img loading="lazy" data-toggle="tooltip" title="My Profile" height={"35px"} width={"35px"} src="images/Ellipse 33.svg" alt="porfile-btn" />
                                 ) : <Button linkprop={"/login"}>Log In</Button>
-
                             }
+                            {/* <li>{Object?.keys(userdata)}</li> */}
                             <div className="hamburgur" onClick={NavFunc} >
                                 <img loading="lazy" height={"30px"} width={"30px"} src="images/menu-alt-1.svg" alt="icone" />
                             </div>

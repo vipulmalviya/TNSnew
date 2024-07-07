@@ -14,3 +14,14 @@ export const fetchDataFromApi = async(url, params)=>{
         return err;
     }
 }
+
+export const fetchMovies = async(url)=>{
+    try{
+        const {data} = await axios.get(BASE_URL + url)
+        return data;
+    } catch(err){
+        console.log(err);
+        return err;
+    }
+}
+

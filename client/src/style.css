@@ -1589,6 +1589,17 @@ input:checked:hover~.rating-counter:before {
   border-radius: 0px;
 }
 
+.notSelected{
+  height: 50vh;
+  width: 90vw;
+}
+.notSelected h3{
+  white-space: nowrap;
+  font-size: var(--h2-Heading);
+  font-weight: 600;
+  color: rgba(128, 128, 128, 0.23);
+}
+
 
 
 .innerContianer .react-multi-carousel-item {

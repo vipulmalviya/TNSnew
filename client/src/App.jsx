@@ -31,13 +31,12 @@ function App() {
       {showMainNavBar && <Nav />}
       {showMobileNavBar && <MobileMenu />}
       <Routes location={location}>
-      <Route exact path="/login" element={<Login />} />
+        <Route exact path="/login" element={<Login />} />
         <Route exact path="/" element={<TastePage />} />
         <Route exact path="/moodPage" element={<MoodPage />} />
         <Route exact path="/experiencePage" element={<ExperiencePage />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/home" element={<Home />} />
-        {/* <Route exact path="/watchlistPage" element={<WatchlistPage />} /> */}
         <Route exact path="/yourWatchlist" element={<YourWatchlist />} />
         <Route exact path="/:id" element={<SingleMoviePage />} />
         <Route exact path="/search" element={<SearchResult />} />

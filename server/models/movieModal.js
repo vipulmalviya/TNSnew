@@ -10,6 +10,7 @@ const movieSchema = new mongoose.Schema({
   cinematographyBy: String,
   moviePoster: String,
   movieBanner: String,
+  Type: String,
   awards: [{
     award: String,
     category: String,

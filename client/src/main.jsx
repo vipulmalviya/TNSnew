@@ -6,14 +6,17 @@ import { BrowserRouter as Router } from 'react-router-dom';
 const rootElement = document.getElementById('root');
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MovieFetch } from './utils/MovieFetch';
 
 
 
 createRoot(rootElement).render(
   // <React.StrictMode>
-  <Router>
-    <App />
-    <ToastContainer />
-  </Router>
+  <MovieFetch>
+    <Router>
+      <App />
+      <ToastContainer />
+    </Router>
+  </MovieFetch>
   // </React.StrictMode>
 );

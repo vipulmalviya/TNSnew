@@ -119,8 +119,13 @@ const CategoryPage = () => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const result = await MovieFetch(selectedGenres);
-                setMovies(result);
+                const result = await MovieFetch(selectedGenres, type);
+                if (Array.isArray(result)) {
+                    setMovies(result);
+                } else {
+                    console.error('Fetched data is not an array:', result);
+                    setMovies([]);
+                }
             } catch (error) {
                 console.error('Error fetching movies:', error);
                 setError(error);
@@ -128,7 +133,7 @@ const CategoryPage = () => {
         };
 
         fetchMovies();
-    }, [selectedGenres]);
+    }, [selectedGenres, type]);
 
 
     // console.log(Movies,selectedGenres);
@@ -179,7 +184,7 @@ const CategoryPage = () => {
                         </button>
                         <ul className="dropdown-menu" >
                             <li><button onClick={categoryFunc} className="dropdown-item" type="button"><MdArrowForward />TV Series</button></li>
-                            <li><button onClick={categoryFunc} className="dropdown-item" type="button"><MdArrowForward />Movies</button></li>
+                            <li><button onClick={categoryFunc} className="dropdown-item" type="button"><MdArrowForward />Movie</button></li>
                             <li><button onClick={categoryFunc} className="dropdown-item" type="button"><MdArrowForward />Curated List</button></li>
                         </ul>
                     </div>
@@ -215,9 +220,11 @@ const CategoryPage = () => {
                         <p className=''>Search only for <span>{"Hidden Gems"}</span></p>
                     </div>
                     <div className="cardsitems">
-                        {Movies.map((elem, index) => {
-                            return <Cards key={index} Poster={elem.moviePoster} Title={elem.name} catagory={elem.genre} watch={elem.popularity} year={elem.releaseDate} episode={elem.episode} btn={true} mediaId={elem._id.$oid} />
-                        })}
+                        {Movies.length > 0 ?
+                            Movies.map((elem, index) => {
+                                return <Cards key={index} Poster={elem.moviePoster} Title={elem.name} catagory={elem.genre} watch={elem.popularity} year={elem.releaseDate} episode={elem.episode} btn={true} mediaId={elem._id.$oid} />
+                            })
+                            : <div className='notSelected d-flex align-items-center justify-content-center'><h3>plezz select atlist three genre!!!</h3></div>}
                     </div>
                 </div>
             </section>

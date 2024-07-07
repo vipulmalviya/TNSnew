@@ -1,15 +1,32 @@
-import axios from "axios";
-const API = import.meta.env.VITE_APP_URI_API;
+import React, { createContext, useEffect, useState } from 'react'
+import { fetchMovies } from './api';
 
 
+const MovieContext = createContext()
+const MovieFetch = ({ children }) => {
+    const [movies, setMovies] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-export const MovieFetch = async (params) => {
-    console.log(params);
-    try {
-        const response = await axios.post(`${API}/movies-find`, { params });
-        return response.data; 
-    } catch (err) {
-        console.error('Error fetching movies:', err);
-        throw err;
-    }
+    useEffect(() => {
+        const getMovies = async () => {
+            try {
+                const result = await fetchMovies("/api/movies");
+                setMovies(result);
+            } catch (error) {
+                console.error('Failed to fetch movies', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getMovies();
+    }, []);
+
+    return (
+        <MovieContext.Provider value={{ movies, loading }}>
+            {children}
+        </MovieContext.Provider>
+    )
 }
+
+export { MovieFetch, MovieContext }

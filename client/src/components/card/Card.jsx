@@ -78,7 +78,7 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode,
                         </button>
                     }
                     </div>
-                    {showCards && (<Suspense fallback={<div>lodaing.....</div>}> <WatchlistModel data={watchlists} passFunction={PushMovieFunc} /></Suspense>)}
+                    {showCards && (<Suspense fallback={<div>lodaing.....</div>}> <WatchlistModel  passFunction={PushMovieFunc} /></Suspense>)}
                 </div>
 
                 <div className='movieDetails d-flex justify-content-between flex-column'>
