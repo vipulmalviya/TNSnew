@@ -106,7 +106,7 @@ const List = ({ onDragStart, onDragOver, onDrop, index, item, draggedItemIndex, 
 
   const navigate = useNavigate();
 
-  const address = (item[0]._id.$oid);
+  const address = (item[0]._id);
 
   return (
     <>

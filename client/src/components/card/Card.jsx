@@ -11,9 +11,7 @@ const WatchlistModel = lazy(() => import("./WatchlistModel"))
 const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode, elem }) => {
     const [ChangeBtn, setChangeBtn] = useState(false)
     const [showCards, setShowCards] = useState(false)
-    // const [movieid, setMovieid] = useState(null)
     const [movieDetail, setMovieDetail] = useState("")
-    const [cardid, setCardid] = useState("")
 
     const API = import.meta.env.VITE_APP_URI_API;
 
@@ -37,7 +35,6 @@ const Card = ({ index, Poster, Title, watch, btn, mediaId, value, year, episode,
         setShowCards(!showCards)
     }
     const handleClickOutside = (event) => {
-
         if (cardRef.current && !cardRef.current.contains(event.target)) {
             setShowCards(false);
         }

@@ -237,8 +237,6 @@ const Home = () => {
         </div>
       </section>
 
-      <WatchlistModel />
-
       <LGScard truep={true} data={dataL} sectiontitle={"Titles from different languages"} />
       <LGScard truep={false} data={dataG} sectiontitle={"Titles from different genres"} />
 
