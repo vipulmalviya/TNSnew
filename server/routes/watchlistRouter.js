@@ -66,7 +66,6 @@ router.post('/watchlist-delete', async (req, res) => {
         if (typeof watchlistId === 'object' && watchlistId) {
             validCardId = watchlistId;
         }
-
         const result = await WatchlistModel.deleteOne(
             { _id: validCardId },
         );

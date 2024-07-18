@@ -46,7 +46,7 @@ nav .left {
 }
 
 .navM input {
-    color: var(--light-text-colo) ;
+    color: var(--light-text-colo);
     font-size: var(--p2-Paragraph);
     border: none;
     outline: none;
@@ -74,14 +74,22 @@ nav .left {
     font-size: var(--p3-Paragraph);
     margin: 0;
 }
+.notificationBage {
+    width: 25px;
+    height: 25px;
+    padding: 3px 6px 3px 6px;
+    gap: 10px;
+    border-radius: 70px;
+    background: var(--decorate-color);
+    color: var(--black-color);
+    margin-left: .5rem;
+}
 
 .watchlistDiv svg {
     color: var(--decorate-color);
     font-size: 1rem;
     stroke-width: 1.3px;
 }
-
-
 
 .hamburgur {
     cursor: pointer;
@@ -182,7 +190,8 @@ nav .left {
     font-weight: 800;
     font-size: var(--h6-Heading);
 }
-.react-multi-carousel-list{
+
+.react-multi-carousel-list {
     padding: 0;
 }
 
@@ -196,6 +205,7 @@ nav .left {
     position: relative;
     width: 100%;
 }
+
 .subHeader .container .at {
     background: var(--decorate-color);
     color: var(--black-color);
@@ -256,12 +266,14 @@ nav .left {
 }
 
 @media screen and (max-width: 428px) {
-    header{
+    header {
         height: 57px !important;
     }
-    .subHeader{
+
+    .subHeader {
         height: 46px !important;
     }
+
     .side-menu {
         width: 100vw;
     }
@@ -305,6 +317,7 @@ nav .left {
         display: none;
     }
 
+
     .Watchlist::before {
         position: absolute;
         content: "My Watchlist";
@@ -317,6 +330,7 @@ nav .left {
         opacity: 0;
         transition: all ease-in .3s;
     }
+
 
     .Watchlist:hover::before {
         opacity: 1;

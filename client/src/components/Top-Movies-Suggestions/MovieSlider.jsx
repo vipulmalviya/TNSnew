@@ -9,12 +9,19 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { GoArrowRight } from 'react-icons/go';
 import { MovieContext } from '../../utils/MovieFetch.jsx';
+import { getMovies } from '../../store/movies/moviesSlice.jsx';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 
 const MovieSlider = ({ title, type }) => {
-  const { movies, loading } = useContext(MovieContext)
+
+  
+  // const dispatch = useDispatch();
+  const { value: movies, loading, error } = useSelector((state) => state.movies);
+  
+  // const { movies, loading } = useContext(MovieContext)
   const responsive = {
     superlargedesktop: {
       breakpoint: { max: 4000, min: 1860 },

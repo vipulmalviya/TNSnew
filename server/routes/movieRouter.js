@@ -30,12 +30,11 @@ router.get('/api/movies/:id', async (req, res) => {
 });
 
 // find movies by genres and type
-
 router.post('/movies-find', async (req, res) => {
-  const { params, type } = req.body
-  console.log(params, type);
+  const { type, selectedGenres } = req.body
+  console.log(type, selectedGenres);
   try {
-    const movie = await Movie.find({ Type: type , genre: { $in: params } })
+    const movie = await Movie.find({ Type: type, genre: { $in: selectedGenres } })
     // const movie = await Movie.find() 
 
     if (!movie) {

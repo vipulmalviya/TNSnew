@@ -11,13 +11,20 @@ import { CiCircleChevLeft, CiCircleChevRight } from 'react-icons/ci';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchMovies } from '../../utils/api';
 import { MovieContext } from '../../utils/MovieFetch';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getMovies } from '../../store/movies/moviesSlice';
 
 
 const HomeSlider = () => {
 
+  const dispatch = useDispatch();
+  const { value: movies, loading, error } = useSelector((state) => state.movies);
 
-  const {movies , loading } = useContext(MovieContext);
+  useEffect(() => {
+    dispatch(getMovies());
+  }, [dispatch]);
+
+  // const {movies , loading } = useContext(MovieContext);
   // const [Movies, setMovies] = useState([])
 
   // useEffect(() => {
@@ -48,6 +55,7 @@ const HomeSlider = () => {
   //   }, 2000);
   // }, []);
 
+  // const loading = false
   const [stream, setStream] = useState(true)
   function streambtn() {
     setStream(!stream)
@@ -79,11 +87,11 @@ const HomeSlider = () => {
           modules={[EffectCoverflow, Pagination, Navigation, Autoplay]}
           className="swiper_container"
         >
-          {movies?.map((elem, index) => (
+          {movies.map((elem, index) => (
             <SwiperSlide key={index} className='swiper-slide d-flex' style={{
               background: `linear-gradient(to top, black, transparent), url(${elem.movieBanner})`
             }}>
-              <div onClick={() => navigate(`/${elem._id.$oid}`)} className='container p-5 d-flex align-items-end'>
+              <div onClick={() => navigate(`/${elem._id}`)} className='container p-5 d-flex align-items-end'>
                 <div className='caption slider-active d-flex flex-column justify-content-end align-items-start gap-2'>
                   <img loading="lazy" height={"40%"} width={"40%"} src="images/BestOfAllTime.svg" alt="brand logo" />
                   <h2>{elem.name}</h2>

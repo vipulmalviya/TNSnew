@@ -303,6 +303,7 @@
 }
 
 .wathlistOptions {
+    display: none !important;
     top: 40px;
     left: -10px;
     background: rgba(40, 40, 41, 1);

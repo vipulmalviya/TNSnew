@@ -7,6 +7,7 @@ import { ImForward, ImForward2 } from 'react-icons/im';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import Tagebutton from '../components/buttons/Tagebutton';
 import { MovieFetch } from '../utils/MovieFetch';
+import { fetchDataFromApi } from '../utils/api';
 
 
 
@@ -110,7 +111,7 @@ const CategoryPage = () => {
         }
     ]
 
-    const genres = ["Action", "Adventure", "Anime", "Awards", "Comedy", "Cinematic", "Crime", "Documentary", "Dystopian", "Family", "Fantasy", "Gangsters", "Historical", "Crime", "Documentary", "Dystopian", "Family", "Fantasy", "Gangsters", "Horror", "Musical", "Mystery", "Psychological", "Romance"]
+    const genres = ["Action", "Adventure", "Anime", "Awards", "Comedy", "Cinematic", "Crime", "Documentary", "Dystopian", "Family", "Fantasy", "Drama","Gangsters", "Historical", "Crime", "Documentary", "Dystopian", "Family", "Fantasy", "Gangsters", "Horror", "Musical", "Mystery", "Psychological", "Romance"]
 
     const [genre, setGenre] = useState("crime")
     const [type, setType] = useState("movie")
@@ -119,7 +120,7 @@ const CategoryPage = () => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const result = await MovieFetch(selectedGenres, type);
+                const result = await fetchDataFromApi("/movies-find",selectedGenres, type);
                 if (Array.isArray(result)) {
                     setMovies(result);
                 } else {
@@ -128,7 +129,7 @@ const CategoryPage = () => {
                 }
             } catch (error) {
                 console.error('Error fetching movies:', error);
-                setError(error);
+
             }
         };
 

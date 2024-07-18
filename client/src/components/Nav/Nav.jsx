@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./Nav.css"
 import { Link, useNavigate } from 'react-router-dom'
 import { MdArrowForward } from 'react-icons/md'
@@ -7,9 +7,16 @@ import { CiSearch } from 'react-icons/ci'
 import "react-multi-carousel/lib/styles.css";
 import axios from 'axios'
 import Button from '../buttons/Button'
-
+import { MovieContext } from '../../utils/MovieFetch';
+import { useSelector } from 'react-redux'
 
 const Nav = ({ setQuery, query }) => {
+
+
+     const { value: watchlist , loading, error } = useSelector((state) => state.watchlist);
+
+    const watchlistNum = watchlist.length ;
+
 
     const [Nav, setNav] = useState(false)
     function NavFunc(params) {
@@ -21,22 +28,20 @@ const Nav = ({ setQuery, query }) => {
         navigate(event)
     };
 
-
-
     const API = import.meta.env.VITE_APP_URI_API;
     const [userdata, setUserdata] = useState({});
-    console.log(userdata);
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                const response = await axios.get(`${API}/login/success`, { withCredentials: true });
-                setUserdata(response.data.user)
-            } catch (error) {
-                console.log("error", error)
-            }
-        }
-        getUser()
-    }, [])
+    // console.log(userdata);
+    // useEffect(() => {
+    //     const getUser = async () => {
+    //         try {
+    //             const response = await axios.get(`${API}/login/success`, { withCredentials: true });
+    //             setUserdata(response.data.user)
+    //         } catch (error) {
+    //             console.log("error", error)
+    //         }
+    //     }
+    //     getUser()
+    // }, [])
 
 
 
@@ -61,12 +66,12 @@ const Nav = ({ setQuery, query }) => {
                             </form>
                             <Link to="/Yourwatchlist" className='watchlistDiv d-flex gap-2 align-items-center'>
                                 <img loading="lazy" height={"100%"} width={"100%"} src="images/bookmark.svg" alt="watchlist icone" />
-                                <p className='mt-1'>My Watchlist</p>
+                                <p className='mt-1'>My Watchlist <span className='notificationBage'>{watchlistNum}</span></p>
                             </Link>
                             {
-                                Object?.keys(userdata)?.length > 0 ? (
-                                    <img loading="lazy" data-toggle="tooltip" title="My Profile" height={"35px"} width={"35px"} src="images/Ellipse 33.svg" alt="porfile-btn" />
-                                ) : <Button linkprop={"/login"}>Log In</Button>
+                                // Object?.keys(userdata)?.length > 0 ? (
+                                //     <img loading="lazy" data-toggle="tooltip" title="My Profile" height={"35px"} width={"35px"} src="images/Ellipse 33.svg" alt="porfile-btn" />
+                                // ) : <Button linkprop={"/login"}>Log In</Button>
                             }
                             {/* <li>{Object?.keys(userdata)}</li> */}
                             <div className="hamburgur" onClick={NavFunc} >

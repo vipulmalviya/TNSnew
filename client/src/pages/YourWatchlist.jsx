@@ -15,6 +15,8 @@ import { FiServer, FiTag } from 'react-icons/fi';
 import List from '../components/dragableList/List.jsx';
 import axios from 'axios';
 import { FaArrowLeftLong } from 'react-icons/fa6';
+import { useDispatch, useSelector } from 'react-redux';
+import { getWatchlist } from '../store/watchlist/watchlistSlice.jsx';
 
 
 
@@ -112,28 +114,35 @@ const responsive = {
 };
 const YourWatchlist = () => {
 
+  const dispatch = useDispatch();
+  const { value: watchlist, loading, error } = useSelector((state) => state.watchlist);
 
+  useEffect(() => {
+    dispatch(getWatchlist());
+  }, [dispatch])
+
+  const result = watchlist.length > 0 ;
 
   const API = import.meta.env.VITE_APP_URI_API;
 
   // for get watchlist
-  const [watchlists, setWatchlists] = useState([]);
+  // const [watchlists, setWatchlists] = useState([]);
   const [WatchlistDetails, setWatchlistDetails] = useState([]);
   const [titles, setTitles] = useState([]);
   const [Manage, setManage] = useState("");
 
-  useEffect(() => {
-    const fetchWatchlist = async () => {
-      try {
-        const url = `${API}/watchlist-get`;
-        const response = await axios.get(url);
-        setWatchlists(response.data);
-      } catch (error) {
-        console.error('Error fetching watchlist data:', error);
-      }
-    };
-    fetchWatchlist();
-  }, []);
+  // useEffect(() => {
+  //   const fetchWatchlist = async () => {
+  //     try {
+  //       const url = `${API}/watchlist-get`;
+  //       const response = await axios.get(url);
+  //       setWatchlists(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching watchlist data:', error);
+  //     }
+  //   };
+  //   fetchWatchlist();
+  // }, []);
 
 
 
@@ -171,39 +180,6 @@ const YourWatchlist = () => {
     }).catch(err => console.log(err));
   }
 
-
-
-  // this is for save page state in session storeage
-
-  // const [Manage, setManage] = useState(() => {
-  //   const storedbtn = sessionStorage.getItem('Manage');
-  //   return storedbtn ? JSON.parse(storedbtn) : false;
-  // });
-  // const [WatchlistDetails, setWatchlistDetails] = useState(() => {
-  //   const WatchlistDetails = sessionStorage.getItem('cards');
-  //   return WatchlistDetails ? JSON.parse(WatchlistDetails) : [];
-  // });
-
-  // const [titles, setTitles] = useState(() => {
-  //   const titles = sessionStorage.getItem('titles');
-  //   return titles ? JSON.parse(titles) : [];
-  // });
-
-  // useEffect(() => {
-  //   if (titles) {
-  //     sessionStorage.setItem('titles', JSON.stringify(titles));
-  //   }
-  // }, [WatchlistDetails]);
-  // useEffect(() => {
-  //   if (WatchlistDetails) {
-  //     sessionStorage.setItem('cards', JSON.stringify(WatchlistDetails));
-  //   }
-  // }, [WatchlistDetails]);
-  // useEffect(() => {
-  //   if (Manage) {
-  //     sessionStorage.setItem('Manage', JSON.stringify(Manage));
-  //   }
-  // }, [WatchlistDetails]);
 
   //  this all things for draggebale list items
 
@@ -262,7 +238,6 @@ const YourWatchlist = () => {
   }, []);
 
 
-  const result = watchlists.length > 0;
 
   return (
     <fregment >
@@ -334,7 +309,7 @@ const YourWatchlist = () => {
             <p onClick={modalshow} className='watchlistbtn mb-0'><IoAddCircleOutline />Create New Watchlist</p>
           </div>
           <div className='cardContaienr d-grid'>
-            <WatchlistCard ManageCardId={getManageCardId} watchlist={watchlists} />
+            <WatchlistCard ManageCardId={getManageCardId}/>
           </div>
         </div>
       </section> : <section className='headersection d-flex flex-column'>
